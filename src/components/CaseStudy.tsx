@@ -305,6 +305,46 @@ export default function CaseStudy({ study }: { study: Study }) {
             <p className="mt-6 border-t border-white/10 pt-4 text-sm text-slate-500">{study.architecture.footnote}</p>
           )}
         </div>
+
+        {/* Integrations grid */}
+        {study.architecture.integrations && (
+          <div className="mt-10">
+            <h3 className="reveal text-2xl">Integrations</h3>
+            <div className="mt-6 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+              {study.architecture.integrations.map((group) => (
+                <div key={group.category} className="reveal glass rounded-xl p-6">
+                  <p className="text-xs font-bold tracking-[0.2em] text-cyan uppercase">{group.category}</p>
+                  <ul className="mt-4 space-y-4">
+                    {group.services.map((svc) => (
+                      <li key={svc.name} className="flex gap-3">
+                        <span className="grid size-9 shrink-0 place-items-center rounded-lg bg-sky/10 text-sm font-bold text-sky">
+                          {svc.name.charAt(0)}
+                        </span>
+                        <div>
+                          <p className="font-semibold text-white">{svc.name}</p>
+                          <p className="text-sm leading-relaxed text-slate-400">{svc.purpose}</p>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+              {study.architecture.guardrails && (
+                <div className="reveal rounded-xl border border-mint/30 bg-mint/10 p-6">
+                  <p className="text-xs font-bold tracking-[0.2em] text-mint uppercase">Guardrails</p>
+                  <ul className="mt-4 space-y-3">
+                    {study.architecture.guardrails.map((g) => (
+                      <li key={g} className="flex gap-2.5 text-sm text-slate-200">
+                        <span className="text-mint">✓</span>
+                        {g}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
       </Section>
       )}
 

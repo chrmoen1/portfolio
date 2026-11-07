@@ -45,6 +45,9 @@ export type CaseStudy = {
     intro: string;
     layers: { name: string; highlight?: boolean; nodes: { title: string; detail: string }[] }[];
     footnote?: string;
+    // Detailed list of third-party services, grouped by category
+    integrations?: { category: string; services: { name: string; purpose: string }[] }[];
+    guardrails?: string[];
   };
   pipeline: {
     title: string;
@@ -82,6 +85,7 @@ export const caseStudies: CaseStudy[] = [
       "MongoDB",
       "OpenAI",
       "Firebase Auth",
+      "Gmail & Microsoft Graph APIs",
       "Google Cloud Run",
       "Paddle",
       "PostHog",
@@ -174,7 +178,7 @@ export const caseStudies: CaseStudy[] = [
           name: "Data & integrations",
           nodes: [
             { title: "MongoDB", detail: "Clients, threads, tasks, workflows" },
-            { title: "Gmail", detail: "Google APIs + OAuth" },
+            { title: "Inboxes", detail: "Gmail (Google APIs) · Outlook (Microsoft Graph)" },
             { title: "Billing", detail: "Paddle subscriptions & webhooks" },
             { title: "Analytics", detail: "PostHog product analytics" },
             { title: "Storage & email", detail: "Cloud Storage · Resend" },
@@ -182,6 +186,52 @@ export const caseStudies: CaseStudy[] = [
         },
       ],
       footnote: "Frontend and API are containerized and deployed to Google Cloud Run.",
+      integrations: [
+        {
+          category: "Inboxes",
+          services: [
+            { name: "Gmail", purpose: "Google APIs with OAuth to read client threads and send replies from the broker's own address." },
+            { name: "Outlook", purpose: "Microsoft Graph for messages, folders, and sending mail, so Microsoft 365 brokers are supported too." },
+          ],
+        },
+        {
+          category: "AI",
+          services: [
+            { name: "OpenAI", purpose: "LLMs power each agent in the pipeline; embeddings rank the most relevant context and examples." },
+          ],
+        },
+        {
+          category: "Identity & security",
+          services: [
+            { name: "Firebase Authentication", purpose: "User sign-in and session management for the web app." },
+            { name: "Admin MFA", purpose: "Time-based one-time passwords (TOTP) protect administrative access." },
+            { name: "Encryption", purpose: "AES-256 encryption for sensitive data." },
+          ],
+        },
+        {
+          category: "Billing & growth",
+          services: [
+            { name: "Paddle", purpose: "Subscriptions, checkout, and webhooks that keep plan state in sync." },
+            { name: "PostHog", purpose: "Product analytics to see how brokers actually use the product." },
+            { name: "Calendly", purpose: "Booking onboarding calls directly from the app." },
+          ],
+        },
+        {
+          category: "Infrastructure",
+          services: [
+            { name: "Google Cloud Run", purpose: "Containerized frontend and API with scripted deploys." },
+            { name: "Google Cloud Storage", purpose: "File and media uploads." },
+            { name: "MongoDB", purpose: "Primary datastore for clients, threads, tasks, and workflows." },
+            { name: "Resend", purpose: "Transactional emails and operational alerts." },
+          ],
+        },
+      ],
+      guardrails: [
+        "Daily outbound send limits",
+        "Allow-listed hosts for outbound requests",
+        "Alerts on OAuth and AI provider failures",
+        "AI can be removed from any thread at any time",
+      ],
     },
     pipeline: {
       title: "The AI pipeline",
