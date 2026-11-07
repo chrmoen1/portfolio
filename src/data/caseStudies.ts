@@ -451,7 +451,7 @@ export const caseStudies: CaseStudy[] = [
         },
       ],
       audiences: [
-        { name: "Front-line agents", gets: "A plain-language root cause during the call, so they can resolve or route correctly." },
+        { name: "Front-line agents", gets: "An alert in their tool flagging the issue the customer may have experienced, so they can resolve or route correctly." },
         { name: "Field technicians", gets: "A diagnosis before arriving, so visits start with the likely fix." },
         { name: "Operations teams", gets: "Visibility into recurring issue patterns across the customer base." },
       ],
@@ -491,7 +491,7 @@ export const caseStudies: CaseStudy[] = [
           name: "Action",
           nodes: [
             { title: "Frontline tools", detail: "Results uploaded for agents & techs" },
-            { title: "Front-line agents", detail: "Root cause during the call" },
+            { title: "Front-line agents", detail: "Alert with the likely issue" },
             { title: "Field technicians", detail: "Diagnosis before the visit" },
             { title: "Proactive replacement", detail: "Email alert + new power supply shipped" },
           ],
@@ -640,7 +640,7 @@ deploy-openstack:
       {
         title: "Making data useful on a live call",
         problem: "Front-line agents need an answer in seconds, not a dashboard of raw metrics.",
-        approach: "Translated each detection into a plain-language root cause and a recommended next step.",
+        approach: "Translated each detection into a plain-language root cause and a recommended next step, and surfaced it as an alert in the front-line agent's tool, so the agent knows what issue the customer may have experienced before they start troubleshooting.",
       },
       {
         title: "One diagnosis across teams",
