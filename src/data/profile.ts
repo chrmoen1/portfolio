@@ -65,6 +65,7 @@ export const experience: Job[] = [
     highlights: [
       "Designed and shipped networking solutions for 1.5M users across 3 modem brands.",
       "Deployed SQL scripts and built automated detection systems with Ansible, Bash, and Python to surface and diagnose access-network issues across the modem fleet.",
+      "Containerized and deployed solutions to OpenStack using Docker.",
       "Led an IPTV performance initiative that cut $735K+ in daily maintenance costs.",
       "Resolved major Giga Hub issues, improving QoS by 10% and reaching 99% service reliability.",
     ],
@@ -144,7 +145,7 @@ export const skills: { group: string; items: string[] }[] = [
   { group: "Languages", items: ["TypeScript", "JavaScript", "Python", "SQL", "Bash", "PowerShell"] },
   { group: "Frontend", items: ["React", "Tailwind CSS", "Vite"] },
   { group: "Backend & Data", items: ["Node.js", "GraphQL", "MongoDB", "REST APIs", "Machine Learning"] },
-  { group: "DevOps", items: ["Linux", "Ansible", "CI/CD", "Kibana", "Docker"] },
+  { group: "DevOps", items: ["Linux", "Ansible", "CI/CD", "Kibana", "Docker", "OpenStack"] },
 ];
 
 // Self-assessed proficiency (0–100) for skill bars. Adjust to taste.
