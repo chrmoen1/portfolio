@@ -26,14 +26,14 @@ function Section({ title, sub, children }: { title: string; sub?: string; childr
   );
 }
 
-function BrowserFrame({ children }: { children: ReactNode }) {
+function BrowserFrame({ children, label }: { children: ReactNode; label?: string }) {
   return (
     <div className="glass overflow-hidden rounded-2xl shadow-2xl shadow-sky/10">
       <div className="flex items-center gap-2 border-b border-white/10 px-4 py-3">
         <span className="size-3 rounded-full bg-coral/80" />
         <span className="size-3 rounded-full bg-sun/80" />
         <span className="size-3 rounded-full bg-mint/80" />
-        <span className="ml-3 flex-1 truncate rounded-md bg-white/5 px-3 py-1 text-xs text-slate-400">pipemotion.com</span>
+        <span className="ml-3 flex-1 truncate rounded-md bg-white/5 px-3 py-1 text-xs text-slate-400">{label}</span>
       </div>
       {children}
     </div>
@@ -41,6 +41,9 @@ function BrowserFrame({ children }: { children: ReactNode }) {
 }
 
 export default function CaseStudy({ study }: { study: Study }) {
+  const site = study.links[0];
+  const host = site ? new URL(site.href).host.replace(/^www\./, "") : undefined;
+
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
     document.title = `${study.title} case study — Chris Moen`;
@@ -61,9 +64,10 @@ export default function CaseStudy({ study }: { study: Study }) {
       {/* Header */}
       <header className="mt-8 grid gap-10 lg:grid-cols-[1.3fr_1fr] lg:items-end">
         <div>
-          <span className="inline-block rounded-full bg-violet px-4 py-1 text-sm font-semibold text-white">Case Study</span>
+          <span className="inline-block rounded-full bg-violet px-4 py-1 text-sm font-semibold text-white">{study.kicker ?? "Case Study"}</span>
           <h1 className="mt-5 text-5xl sm:text-7xl">{study.title}</h1>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-slate-300 sm:text-xl">{study.tagline}</p>
+          {study.links.length > 0 && (
           <div className="mt-8 flex flex-wrap gap-4">
             {study.links.map((l, i) => (
               <a
@@ -79,6 +83,7 @@ export default function CaseStudy({ study }: { study: Study }) {
               </a>
             ))}
           </div>
+          )}
         </div>
         <dl className="glass grid grid-cols-2 gap-px overflow-hidden rounded-xl">
           {study.meta.map((m) => (
@@ -91,14 +96,15 @@ export default function CaseStudy({ study }: { study: Study }) {
       </header>
 
       {/* Demo video */}
+      {(study.video || (DEV && study.placeholders?.video)) && (
       <div className="mt-14">
         {study.video ? (
-          <BrowserFrame>
+          <BrowserFrame label={host}>
             <video src={study.video.src} poster={study.video.poster} controls playsInline preload="metadata" className="aspect-video w-full bg-black" />
           </BrowserFrame>
         ) : (
-          DEV && (
-            <BrowserFrame>
+          (
+            <BrowserFrame label={host}>
               <div className="relative grid aspect-video place-items-center bg-gradient-to-br from-sky/20 via-night to-violet/20">
                 <span className="grid size-20 place-items-center rounded-full bg-white/10 ring-1 ring-white/20">
                   <svg className="ml-1 size-8 text-white" viewBox="0 0 24 24" fill="currentColor">
@@ -106,13 +112,14 @@ export default function CaseStudy({ study }: { study: Study }) {
                   </svg>
                 </span>
                 <p className="absolute bottom-6 text-sm text-slate-400">
-                  Demo video, 60–90s, from <code className="text-cyan">demo_video/revision_2</code> · hidden in production
+                  {study.placeholders?.video} · hidden in production
                 </p>
               </div>
             </BrowserFrame>
           )
         )}
       </div>
+      )}
 
       {/* Stack */}
       <ul className="mt-10 flex flex-wrap gap-2">
@@ -137,6 +144,7 @@ export default function CaseStudy({ study }: { study: Study }) {
       </Section>
 
       {/* Client intelligence */}
+      {study.intelligence && (
       <Section title="Context-aware clients" sub={study.intelligence.intro}>
         <div className="grid gap-8 lg:grid-cols-[1.5fr_1fr] lg:items-start">
           <div className="grid gap-4 sm:grid-cols-2">
@@ -187,6 +195,47 @@ export default function CaseStudy({ study }: { study: Study }) {
           </figure>
         </div>
       </Section>
+      )}
+
+      {/* Detections: signal → root cause → action */}
+      {study.detections && (
+        <Section title={study.detections.title} sub={study.detections.intro}>
+          <div className="grid gap-5 md:grid-cols-3">
+            {study.detections.items.map((d, i) => (
+              <div key={d.name} className="reveal glass flex flex-col rounded-xl p-6" style={{ transitionDelay: `${i * 80}ms` }}>
+                <h3 className="text-xl">{d.name}</h3>
+                <dl className="mt-5 space-y-4 text-sm">
+                  {[
+                    ["Signal", d.signal, "text-sun"],
+                    ["Likely root cause", d.rootCause, "text-coral"],
+                    ["Action delivered", d.action, "text-mint"],
+                  ].map(([label, value, tone]) => (
+                    <div key={label} className="border-l-2 border-white/10 pl-3">
+                      <dt className={`text-xs font-bold tracking-wider uppercase ${tone}`}>{label}</dt>
+                      <dd className="mt-1 leading-relaxed text-slate-300">{value}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+            ))}
+          </div>
+          <div className="reveal mt-8 grid gap-4 md:grid-cols-3">
+            {study.detections.audiences.map((a) => (
+              <div key={a.name} className="flex gap-4 rounded-xl border border-violet/30 bg-violet/10 p-5">
+                <span className="grid size-10 shrink-0 place-items-center rounded-lg bg-violet/25 text-violet">
+                  <svg className="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M16 20v-1a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v1M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" />
+                  </svg>
+                </span>
+                <div>
+                  <p className="font-semibold text-white">{a.name}</p>
+                  <p className="mt-1 text-sm leading-relaxed text-slate-400">{a.gets}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </Section>
+      )}
 
       {/* Architecture */}
       <Section title="Architecture" sub={study.architecture.intro}>
@@ -207,7 +256,7 @@ export default function CaseStudy({ study }: { study: Study }) {
                     <div
                       key={n.title}
                       className={`min-w-44 flex-1 rounded-xl border px-4 py-3 ${
-                        layer.name === "Intelligence" ? "border-violet/40 bg-violet/10" : "border-white/10 bg-white/[0.03]"
+                        layer.highlight ? "border-violet/40 bg-violet/10" : "border-white/10 bg-white/[0.03]"
                       }`}
                     >
                       <p className="font-semibold text-white">{n.title}</p>
@@ -218,15 +267,15 @@ export default function CaseStudy({ study }: { study: Study }) {
               </div>
             </Fragment>
           ))}
-          <p className="mt-6 border-t border-white/10 pt-4 text-sm text-slate-500">
-            Frontend and API are containerized and deployed to Google Cloud Run.
-          </p>
+          {study.architecture.footnote && (
+            <p className="mt-6 border-t border-white/10 pt-4 text-sm text-slate-500">{study.architecture.footnote}</p>
+          )}
         </div>
       </Section>
 
       {/* AI pipeline */}
-      <Section title="The AI pipeline" sub={study.pipeline.intro}>
-        <ol className="grid gap-4 sm:grid-cols-2 lg:grid-cols-6">
+      <Section title={study.pipeline.title} sub={study.pipeline.intro}>
+        <ol className={`grid gap-4 sm:grid-cols-2 ${study.pipeline.stages.length === 5 ? "lg:grid-cols-5" : "lg:grid-cols-6"}`}>
           {study.pipeline.stages.map((s, i) => (
             <li key={s.name} className="reveal relative" style={{ transitionDelay: `${i * 60}ms` }}>
               <div className="glass h-full rounded-xl p-5">
@@ -266,10 +315,10 @@ export default function CaseStudy({ study }: { study: Study }) {
       </Section>
 
       {/* Results */}
-      {(study.results?.length || DEV) && (
+      {(study.results?.length || (DEV && study.placeholders?.results)) && (
         <Section title="Results">
           {study.results?.length ? (
-            <div className="grid grid-cols-2 gap-5 lg:grid-cols-4">
+            <div className={`grid grid-cols-2 gap-5 ${study.results.length < 4 ? "lg:grid-cols-3" : "lg:grid-cols-4"}`}>
               {study.results.map((r) => (
                 <div key={r.label} className="glass rounded-xl px-4 py-8 text-center">
                   <p className="text-4xl font-extrabold text-sky">{r.value}</p>
@@ -279,7 +328,7 @@ export default function CaseStudy({ study }: { study: Study }) {
             </div>
           ) : (
             <div className="grid grid-cols-2 gap-5 lg:grid-cols-4">
-              {["Brokers onboarded", "Emails handled by AI", "Hours saved / week", "Response time"].map((l) => (
+              {study.placeholders?.results?.map((l) => (
                 <Placeholder key={l} label={l} hint="Add a real metric in caseStudies.ts" className="min-h-36" />
               ))}
             </div>
@@ -288,19 +337,19 @@ export default function CaseStudy({ study }: { study: Study }) {
       )}
 
       {/* Screenshots */}
-      {(study.screenshots?.length || DEV) && (
-        <Section title="Inside the product" sub="Screens captured with synthetic demo data.">
+      {(study.screenshots?.length || (DEV && study.placeholders?.screenshots)) && (
+        <Section title="Inside the product" sub={study.placeholders?.screenshotsSub}>
           <div className="grid gap-6 md:grid-cols-2">
             {study.screenshots?.length
               ? study.screenshots.map((s) => (
                   <figure key={s.src}>
-                    <BrowserFrame>
+                    <BrowserFrame label={host}>
                       <img src={s.src} alt={s.caption} loading="lazy" className="w-full" />
                     </BrowserFrame>
                     <figcaption className="mt-3 text-sm text-slate-400">{s.caption}</figcaption>
                   </figure>
                 ))
-              : ["Client pipeline / dashboard", "AI-drafted reply review", "Tasks & reminders", "Inbox connection & onboarding"].map((l) => (
+              : study.placeholders?.screenshots?.map((l) => (
                   <Placeholder key={l} label={l} hint="Screenshot with fake data from the dev environment" className="aspect-video" />
                 ))}
           </div>
@@ -311,16 +360,18 @@ export default function CaseStudy({ study }: { study: Study }) {
       <section className="reveal mt-10 overflow-hidden rounded-2xl bg-gradient-to-br from-sky to-cyan p-8 text-night sm:p-12">
         <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
           <div>
-            <h2 className="text-3xl text-night sm:text-4xl">Want to see it live?</h2>
-            <p className="mt-2 max-w-xl text-night/75">Happy to walk through the product and the architecture behind it.</p>
+            <h2 className="text-3xl text-night sm:text-4xl">{study.cta.title}</h2>
+            <p className="mt-2 max-w-xl text-night/75">{study.cta.body}</p>
           </div>
           <div className="flex flex-wrap gap-3">
             <a href="#contact" className="rounded-md bg-night px-6 py-3 font-semibold text-white transition hover:-translate-y-0.5">
               Get in touch
             </a>
-            <a href={study.links[0]?.href} target="_blank" rel="noreferrer" className="rounded-md border border-night/30 px-6 py-3 font-semibold transition hover:bg-night/10">
-              pipemotion.com ↗
-            </a>
+            {site && (
+              <a href={site.href} target="_blank" rel="noreferrer" className="rounded-md border border-night/30 px-6 py-3 font-semibold transition hover:bg-night/10">
+                {host} ↗
+              </a>
+            )}
           </div>
         </div>
       </section>

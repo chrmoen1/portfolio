@@ -7,23 +7,32 @@
 export type CaseStudy = {
   slug: string;
   title: string;
+  kicker?: string; // small label above the title, e.g. "Case Study · Bell"
   tagline: string;
   meta: { label: string; value: string }[];
   stack: string[];
   links: { label: string; href: string }[];
   video?: { src: string; poster?: string };
   overview: { title: string; body: string }[];
-  intelligence: {
+  intelligence?: {
     intro: string;
     features: { title: string; body: string }[];
     // Illustrative client card (fictional person) shown beside the features
     example: { name: string; intent: string; timeline: string; facts: string[]; next: string };
   };
+  detections?: {
+    title: string;
+    intro: string;
+    items: { name: string; signal: string; rootCause: string; action: string }[];
+    audiences: { name: string; gets: string }[];
+  };
   architecture: {
     intro: string;
-    layers: { name: string; nodes: { title: string; detail: string }[] }[];
+    layers: { name: string; highlight?: boolean; nodes: { title: string; detail: string }[] }[];
+    footnote?: string;
   };
   pipeline: {
+    title: string;
     intro: string;
     stages: { name: string; detail: string }[];
     note: string;
@@ -31,12 +40,16 @@ export type CaseStudy = {
   challenges: { title: string; problem: string; approach: string }[];
   results?: { value: string; label: string }[];
   screenshots?: { src: string; caption: string }[];
+  // Dev-only placeholder labels for content not added yet (omit to show nothing)
+  placeholders?: { video?: string; results?: string[]; screenshots?: string[]; screenshotsSub?: string };
+  cta: { title: string; body: string };
 };
 
 export const caseStudies: CaseStudy[] = [
   {
     slug: "pipemotion",
     title: "pipeMOTION",
+    kicker: "Case Study",
     tagline:
       "An AI-powered CRM that builds a living, context-aware profile of every client, so real estate and mortgage brokers always know who to follow up with, when, and what to say.",
     meta: [
@@ -136,6 +149,7 @@ export const caseStudies: CaseStudy[] = [
         },
         {
           name: "Intelligence",
+          highlight: true,
           nodes: [
             { title: "Agent orchestrator", detail: "Multi-agent email pipeline" },
             { title: "LLMs & embeddings", detail: "OpenAI models, semantic context" },
@@ -152,8 +166,10 @@ export const caseStudies: CaseStudy[] = [
           ],
         },
       ],
+      footnote: "Frontend and API are containerized and deployed to Google Cloud Run.",
     },
     pipeline: {
+      title: "The AI pipeline",
       intro:
         "Every inbound email runs through a pipeline of 20+ specialized agents. Each one does a single job well, which keeps prompts small, behaviour testable, and failures easy to isolate.",
       stages: [
@@ -194,6 +210,149 @@ export const caseStudies: CaseStudy[] = [
     // screenshots: [
     //   { src: "/pipemotion/dashboard.png", caption: "Client pipeline dashboard" },
     // ],
+    placeholders: {
+      video: "Demo video, 60–90s, from demo_video/revision_2",
+      results: ["Brokers onboarded", "Emails handled by AI", "Hours saved / week", "Response time"],
+      screenshots: ["Client pipeline / dashboard", "AI-drafted reply review", "Tasks & reminders", "Inbox connection & onboarding"],
+      screenshotsSub: "Screens captured with synthetic demo data.",
+    },
+    cta: {
+      title: "Want to see it live?",
+      body: "Happy to walk through the product and the architecture behind it.",
+    },
+  },
+  {
+    slug: "bell-root-cause",
+    title: "Home Network Root-Cause Detection",
+    kicker: "Case Study · Bell",
+    tagline:
+      "A SQL-based detection platform that turns raw home-network data into clear root-cause insights, delivered straight to the technicians and front-line agents who fix the problem.",
+    meta: [
+      { label: "Role", value: "Senior Data Scientist" },
+      { label: "Company", value: "Bell" },
+      { label: "Timeline", value: "Jul 2025 — Aug 2026" },
+      { label: "Scope", value: "Detection logic, data pipelines, integrations" },
+    ],
+    stack: ["SQL", "Python", "Linux", "Bash", "Ansible", "Anomaly detection", "Data analysis"],
+    links: [], // internal platform: no public link
+    overview: [
+      {
+        title: "The problem",
+        body: "When a customer's internet or Wi-Fi underperforms, the people helping them often can't see why. Agents troubleshoot by trial and error, technicians arrive without a diagnosis, and the same issue drives repeat calls and visits.",
+      },
+      {
+        title: "The solution",
+        body: "A detection platform that continuously reads home-network data, flags known issue patterns like weak signal, poor performance, and bad Wi-Fi experience, and pinpoints the likely root cause.",
+      },
+      {
+        title: "My role",
+        body: "I designed and built the SQL detection logic and the pipelines behind it, and built the integration that delivers root-cause results to technicians and front-line agents in the tools they already use.",
+      },
+    ],
+    // TODO: confirm these examples match what the platform actually detected and recommended
+    detections: {
+      title: "What it detects",
+      intro:
+        "Each detection turns a raw signal into a diagnosis and a next step, so whoever is helping the customer knows what is wrong and what to do about it.",
+      items: [
+        {
+          name: "Low RSSI",
+          signal: "Weak received signal strength between the gateway and the customer's devices.",
+          rootCause: "Distance, placement, or obstructions between the gateway and where devices are used.",
+          action: "Guide the customer or technician on placement, or recommend extending coverage.",
+        },
+        {
+          name: "Poor network performance",
+          signal: "Speeds, latency, or stability consistently below what the service should deliver.",
+          rootCause: "Separates in-home issues from line or network-side problems.",
+          action: "Route to the right fix first time: in-home troubleshooting, a technician visit, or escalation.",
+        },
+        {
+          name: "Bad Wi-Fi experience",
+          signal: "Patterns that point to a poor experience on Wi-Fi even when the connection itself is healthy.",
+          rootCause: "In-home Wi-Fi conditions rather than the service itself.",
+          action: "Give agents a clear explanation and targeted steps instead of generic troubleshooting.",
+        },
+      ],
+      audiences: [
+        { name: "Front-line agents", gets: "A plain-language root cause during the call, so they can resolve or route correctly." },
+        { name: "Field technicians", gets: "A diagnosis before arriving, so visits start with the likely fix." },
+        { name: "Operations teams", gets: "Visibility into recurring issue patterns across the customer base." },
+      ],
+    },
+    architecture: {
+      intro:
+        "Detection runs as SQL over home-network data, and an integration layer pushes results to the people and tools that act on them.",
+      layers: [
+        {
+          name: "Data",
+          nodes: [
+            { title: "Home network data", detail: "Gateway and Wi-Fi telemetry" },
+            { title: "Service performance", detail: "Speed, latency, and stability metrics" },
+          ],
+        },
+        {
+          name: "Detection",
+          highlight: true,
+          nodes: [
+            { title: "SQL detection rules", detail: "Low RSSI, poor performance, bad Wi-Fi" },
+            { title: "Root-cause analysis", detail: "Maps each detection to a likely cause" },
+          ],
+        },
+        {
+          name: "Delivery",
+          nodes: [
+            { title: "Integration layer", detail: "Pushes results to frontline tools" },
+            { title: "Automation & tooling", detail: "Python, Bash, and Ansible on Linux" },
+          ],
+        },
+        {
+          name: "People",
+          nodes: [
+            { title: "Front-line agents", detail: "Root cause during the call" },
+            { title: "Field technicians", detail: "Diagnosis before the visit" },
+          ],
+        },
+      ],
+    },
+    pipeline: {
+      title: "From data to fix",
+      intro: "Every home moves through the same flow, so root causes reach the right person while the customer still needs help.",
+      stages: [
+        { name: "Ingest", detail: "Read in home-network and performance data." },
+        { name: "Detect", detail: "SQL rules flag known issue patterns." },
+        { name: "Diagnose", detail: "Each detection is mapped to its likely root cause." },
+        { name: "Deliver", detail: "Results reach technicians and front-line agents." },
+        { name: "Resolve", detail: "Fixed first time, with fewer repeat calls and visits." },
+      ],
+      note: "Built to align technicians, agents, and data on one shared diagnosis.",
+    },
+    // TODO: review — these describe typical challenges; adjust to what you actually faced
+    challenges: [
+      {
+        title: "Signal versus noise",
+        problem: "Home-network data is noisy. Flag too much and nobody trusts it; flag too little and real problems slip through.",
+        approach: "Tuned detection thresholds against real outcomes so alerts stay trustworthy and actionable.",
+      },
+      {
+        title: "Making data useful on a live call",
+        problem: "Front-line agents need an answer in seconds, not a dashboard of raw metrics.",
+        approach: "Translated each detection into a plain-language root cause and a recommended next step.",
+      },
+      {
+        title: "One diagnosis across teams",
+        problem: "Agents, technicians, and data teams each saw a different slice of the problem.",
+        approach: "Built a single integration that delivers the same root-cause result to every team that touches the customer.",
+      },
+    ],
+    results: [
+      { value: "~$20K", label: "Savings per month" },
+      // TODO: add more if you can share them, e.g. repeat visits avoided, homes covered
+    ],
+    cta: {
+      title: "Want the deeper dive?",
+      body: "Happy to walk through the detection approach and how it reached frontline teams.",
+    },
   },
 ];
 

@@ -118,11 +118,12 @@ export const projects: Project[] = [
     caseStudy: "pipemotion",
   },
   {
-    title: "Anomaly Detection Pipeline",
+    title: "Home Network Root-Cause Detection",
     category: "Data",
     description:
-      "SQL and Python pipeline that flags production anomalies across large-scale systems and feeds diagnostic tooling.",
-    tags: ["SQL", "Python", "Data Analysis"],
+      "SQL detection platform at Bell that diagnoses low signal, poor performance, and bad Wi-Fi, and delivers root causes to technicians and front-line agents.",
+    tags: ["SQL", "Python", "Anomaly Detection"],
+    caseStudy: "bell-root-cause",
   },
   {
     title: "Project Three",
