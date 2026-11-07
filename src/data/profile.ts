@@ -63,7 +63,7 @@ export const experience: Job[] = [
     role: "Software Engineer — Access Networking",
     period: "Mar 2022 — Jul 2025",
     highlights: [
-      "Designed and shipped networking solutions for 1.5M users across 3 modem brands.",
+      "Designed and shipped networking solutions across 3 modem brands.",
       "Deployed SQL scripts and built automated detection systems with Ansible, Bash, and Python to surface and diagnose access-network issues across the modem fleet.",
       "Containerized and deployed solutions to OpenStack using Docker.",
       "Led an IPTV performance initiative that cut $735K+ in daily maintenance costs.",
@@ -76,7 +76,7 @@ export const experience: Job[] = [
     period: "May 2019 — Jun 2022",
     location: "Ottawa, ON",
     highlights: [
-      "Coordinated hundreds of deployments to 1.5M+ users, including Crave and Amazon Prime integrations and firmware upgrades.",
+      "Coordinated hundreds of deployments, including Crave and Amazon Prime integrations and firmware upgrades.",
       "Deployed .NET solutions delivering IPTV services on Windows-based OpenStack infrastructure.",
       "Built automated deployment solutions with Octopus Deploy for consistent, repeatable releases.",
       "Built and maintained CI/CD pipelines, cutting deployment time by 20%.",
