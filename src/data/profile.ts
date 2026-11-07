@@ -54,7 +54,7 @@ export const experience: Job[] = [
     highlights: [
       "Built an integration system connecting field technicians and support agents with automated home-network root-cause detection, saving ~$20K/month.",
       "Led cross-team investigations spanning multiple network teams to uncover complex, hard-to-trace root causes and drive fixes to resolution.",
-      "Built SQL-based anomaly-detection and analytics pipelines to catch production issues across large-scale systems.",
+      "Deployed SQL-based anomaly-detection and analytics solutions to help manage a network of 1.5M+ users, catching production issues across large-scale systems.",
       "Wrote diagnostic and automation tooling (Python, Bash, Ansible) for root-cause analysis, API health monitoring, and service recovery.",
     ],
   },
