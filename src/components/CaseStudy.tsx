@@ -160,6 +160,39 @@ export default function CaseStudy({ study }: { study: Study }) {
         </Section>
       )}
 
+      {/* Personal assistant band */}
+      {study.assistant && (
+        <Section title={study.assistant.title} sub={study.assistant.intro}>
+          <div className="grid gap-5 md:grid-cols-3">
+            {study.assistant.items.map((it, i) => (
+              <div key={it.title} className="reveal glass rounded-xl p-6" style={{ transitionDelay: `${i * 80}ms` }}>
+                <span className="grid size-12 place-items-center rounded-xl bg-gradient-to-br from-cyan to-sky text-night">
+                  <svg className="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path
+                      d={
+                        {
+                          inbox: "M3 13h5l2 3h4l2-3h5M5 5h14l2 8v6H3v-6z",
+                          repeat: "M17 2l4 4-4 4M3 11V9a3 3 0 0 1 3-3h15M7 22l-4-4 4-4M21 13v2a3 3 0 0 1-3 3H3",
+                          bell: "M6 8a6 6 0 1 1 12 0c0 7 3 8 3 8H3s3-1 3-8M10 21a2 2 0 0 0 4 0",
+                        }[it.icon] ?? "M12 2v20M2 12h20"
+                      }
+                    />
+                  </svg>
+                </span>
+                <h3 className="mt-5 text-xl">{it.title}</h3>
+                <p className="mt-2 leading-relaxed text-slate-400">{it.body}</p>
+              </div>
+            ))}
+          </div>
+          {study.assistant.note && (
+            <p className="reveal mt-6 flex items-center gap-3 text-slate-300">
+              <span className="grid size-8 shrink-0 place-items-center rounded-full bg-mint/15 text-mint">✓</span>
+              {study.assistant.note}
+            </p>
+          )}
+        </Section>
+      )}
+
       {/* System flow diagram */}
       {study.systemFlow && (
         <Section title={study.systemFlow.title} sub={study.systemFlow.intro}>

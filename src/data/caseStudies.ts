@@ -18,6 +18,8 @@ export type CaseStudy = {
   // Explained screen cards; click a card to expand the screenshot
   gallery?: { title: string; src: string; card?: string; alt: string; description: string; points?: string[] }[];
   overview: { title: string; body: string }[];
+  // "Personal assistant" feature band
+  assistant?: { title: string; intro: string; items: { icon: string; title: string; body: string }[]; note?: string };
   intelligence?: {
     intro: string;
     features: { title: string; body: string }[];
@@ -98,7 +100,8 @@ export const caseStudies: CaseStudy[] = [
       "OpenAI",
       "Firebase Auth",
       "Gmail & Microsoft Graph APIs",
-      "Google Cloud Run",
+      "Google Cloud",
+      "Docker",
       "Paddle",
       "PostHog",
       "Playwright",
@@ -169,13 +172,36 @@ export const caseStudies: CaseStudy[] = [
       },
       {
         title: "The solution",
-        body: "pipeMOTION connects to a broker's inbox and turns every conversation into client context: intent, timeline, relationships, and key dates. It uses that context to prioritize clients and to draft, schedule, and track follow-ups, keeping the broker in control of anything sent on their behalf.",
+        body: "pipeMOTION connects to a broker's inbox and turns every conversation into client context: intent, timeline, relationships, and key dates. It uses that context to prioritize clients and to draft, schedule, and track follow-ups. When the broker is busy, the AI acts as a personal assistant, answering new inquiries and keeping key follow-ups moving, while the broker stays in control of anything sent on their behalf.",
       },
       {
         title: "My role",
         body: "As co-founder and CTO I designed the product hand in hand with realtors and mortgage brokers, then architected and built it end to end: the Next.js app, the GraphQL API, the multi-agent AI pipeline, billing, analytics, testing, and cloud deployment.",
       },
     ],
+    assistant: {
+      title: "Your assistant when you're busy",
+      intro:
+        "Brokers spend their days in showings and meetings, not their inbox. pipeMOTION acts as a personal assistant in the background, so new leads get a timely reply and important conversations never go quiet.",
+      items: [
+        {
+          icon: "inbox",
+          title: "Answers new inquiries",
+          body: "New leads get a prompt, personal reply introducing the broker's client care team and asking the right next questions, instead of waiting hours for a callback.",
+        },
+        {
+          icon: "repeat",
+          title: "Keeps key follow-ups moving",
+          body: "Follow-up and nurture emails go out at the right moments, pause when the client replies, and pick back up when a thread goes quiet.",
+        },
+        {
+          icon: "bell",
+          title: "Keeps the broker on top of everything",
+          body: "Tasks, reminders, and \"needs attention\" flags surface what matters, so the broker steps in exactly when a human touch is needed.",
+        },
+      ],
+      note: "Every message is sent in the broker's name and voice, and brokers choose whether drafts need approval or go out automatically.",
+    },
     intelligence: {
       intro:
         "Deals stall when context lives in a broker's head. pipeMOTION keeps an always-current picture of every client and uses it to decide who needs attention next, raising deal throughput without adding work.",
@@ -250,8 +276,17 @@ export const caseStudies: CaseStudy[] = [
             { title: "Storage & email", detail: "Cloud Storage · Resend" },
           ],
         },
+        {
+          name: "Infrastructure · Google Cloud",
+          nodes: [
+            { title: "Cloud Run", detail: "Containerized frontend & API" },
+            { title: "Cloud Build & Artifact Registry", detail: "Docker image builds & storage" },
+            { title: "Cloud Logging & Monitoring", detail: "Structured logs, alerts, dashboards" },
+            { title: "Secret Manager", detail: "API keys & credentials" },
+          ],
+        },
       ],
-      footnote: "Frontend and API are containerized and deployed to Google Cloud Run.",
+      footnote: "Everything runs on Google Cloud: Docker images built with Cloud Build, deployed to Cloud Run, and observed with Cloud Logging and Monitoring.",
       integrations: [
         {
           category: "Inboxes",
@@ -283,10 +318,18 @@ export const caseStudies: CaseStudy[] = [
           ],
         },
         {
-          category: "Infrastructure",
+          category: "Google Cloud infrastructure",
           services: [
-            { name: "Google Cloud Run", purpose: "Containerized frontend and API with scripted deploys." },
-            { name: "Google Cloud Storage", purpose: "File and media uploads." },
+            { name: "Cloud Run", purpose: "Hosts the containerized frontend and API, with traffic managed between revisions." },
+            { name: "Cloud Build & Artifact Registry", purpose: "Builds Docker images on every deploy and stores them for rollouts." },
+            { name: "Cloud Logging & Monitoring", purpose: "Structured logs, config-driven alert rules with runbooks, and dashboards such as AI cost tracking." },
+            { name: "Secret Manager", purpose: "Keeps API keys and credentials out of code and config." },
+            { name: "Cloud Storage", purpose: "File and media uploads." },
+          ],
+        },
+        {
+          category: "Data & messaging",
+          services: [
             { name: "MongoDB", purpose: "Primary datastore for clients, threads, tasks, and workflows." },
             { name: "Resend", purpose: "Transactional emails and operational alerts." },
           ],
@@ -296,6 +339,7 @@ export const caseStudies: CaseStudy[] = [
         "Daily outbound send limits",
         "Allow-listed hosts for outbound requests",
         "Alerts on OAuth and AI provider failures",
+        "Alert rules with runbooks in Cloud Logging",
         "AI can be removed from any thread at any time",
       ],
     },
