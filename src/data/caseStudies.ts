@@ -341,9 +341,9 @@ export const caseStudies: CaseStudy[] = [
         {
           name: "Bad power supply",
           featured: true,
-          signal: "Modem behaviour, especially after a network outage, that points to a failing power supply.",
+          signal: "A combination of access-network and modem parameters, especially after an outage, that together point to a failing power supply.",
           rootCause: "A faulty modem power supply, not the network or the customer's setup.",
-          action: "Proactively ship a replacement power supply to the customer.",
+          action: "Proactively ship a new power supply before the customer has to call, saving ~$20K/month.",
         },
       ],
       audiences: [
@@ -372,7 +372,7 @@ export const caseStudies: CaseStudy[] = [
             { title: "Low RSSI", detail: "Weak Wi-Fi signal" },
             { title: "Poor network performance", detail: "Below expected service" },
             { title: "Bad Wi-Fi experience", detail: "In-home Wi-Fi conditions" },
-            { title: "Bad power supply", detail: "Failing modem power", highlight: true },
+            { title: "Bad power supply", detail: "Access + modem parameters", highlight: true },
           ],
         },
         {
@@ -398,7 +398,7 @@ export const caseStudies: CaseStudy[] = [
     spotlight: {
       title: "Spotlight: power supply detection",
       intro:
-        "After a network outage, modems with failing power supplies can struggle to come back cleanly, and those customers stay down after everyone else has recovered. I built a detection for that pattern so we could fix it before the customer had to ask.",
+        "After a network outage, modems with failing power supplies can struggle to come back cleanly, and those customers stay down after everyone else has recovered. I built a detection that combines several access-network and modem parameters to identify a faulty power supply, so we could ship a replacement before the customer had to ask.",
       before: {
         label: "Without detection",
         summary: "customer finds the problem",
@@ -407,9 +407,9 @@ export const caseStudies: CaseStudy[] = [
       after: {
         label: "With detection",
         summary: "we find the problem",
-        steps: ["Network outage", "Bad power supply detected", "Replacement shipped", "Customer back online"],
+        steps: ["Network outage", "Access & modem parameters analyzed", "Faulty power supply detected", "New power supply shipped proactively", "Customer back online"],
       },
-      outcome: "A better experience after outages: customers with failing power supplies got a replacement proactively instead of discovering the problem themselves.",
+      outcome: "~$20K/month in savings and a better experience after outages: customers with failing power supplies got a new one proactively instead of discovering the problem themselves.",
       caption: "Simplified flow for illustration.",
     },
     pipeline: {
@@ -444,7 +444,7 @@ export const caseStudies: CaseStudy[] = [
       },
     ],
     results: [
-      { value: "~$20K", label: "Savings per month" },
+      { value: "~$20K", label: "Monthly savings from proactive power supply replacement" },
       // TODO: add more if you can share them, e.g. repeat visits avoided, homes covered
     ],
     cta: {
