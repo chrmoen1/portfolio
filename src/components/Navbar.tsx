@@ -30,9 +30,7 @@ export default function Navbar() {
       <header className={`fixed inset-x-0 top-0 z-50 transition-colors ${scrolled ? "bg-night/80 backdrop-blur-md" : ""}`}>
         <nav className="mx-auto flex h-18 max-w-7xl items-center justify-between px-4 sm:px-8">
           <a href="#top" className="flex items-center gap-2 text-xl font-bold text-white">
-            <span className="grid size-9 place-items-center rounded-lg border-2 border-white text-sm">
-              {profile.name.split(" ").map((n) => n[0]).join("")}
-            </span>
+            <img src={profile.avatar} alt="" className="size-9 rounded-lg border-2 border-white bg-cyan object-cover" />
             Portfolio
           </a>
           <button

@@ -40,9 +40,9 @@ export function Button({
 export function Portrait({ className = "" }: { className?: string }) {
   const initials = profile.name.split(" ").map((n) => n[0]).join("");
   return (
-    <div className={`relative overflow-hidden rounded-[2.5rem] bg-cyan ${className}`}>
+    <div className={`relative rounded-[2.5rem] bg-cyan ${profile.photo ? "" : "overflow-hidden"} ${className}`}>
       {profile.photo ? (
-        <img src={profile.photo} alt={profile.name} className="absolute inset-0 h-full w-full object-cover object-top" />
+        <img src={profile.photo} alt={profile.name} className="absolute inset-x-0 bottom-0 h-[108%] w-full object-contain object-bottom drop-shadow-2xl" />
       ) : (
         <svg viewBox="0 0 200 220" className="absolute inset-x-0 bottom-0 w-full text-night/85" aria-hidden="true">
           <circle cx="100" cy="78" r="42" fill="currentColor" />

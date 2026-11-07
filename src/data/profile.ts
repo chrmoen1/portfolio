@@ -14,8 +14,9 @@ export const profile = {
   ],
   // Rotating words for typed/animated hero text
   roles: ["Software Architect", "AI Engineer", "Data Scientist", "Full-Stack Developer"],
-  // Put your headshot in public/ (e.g. public/me.jpg) and set photo: "/me.jpg"
-  photo: "" as string,
+  // Transparent-background cutout and a square face crop, both in public/
+  photo: "/me.webp" as string,
+  avatar: "/me-avatar.webp" as string,
   email: "moenchris1@gmail.com",
   resumeUrl: "/resume.pdf",
   socials: [
@@ -138,7 +139,7 @@ export const skills: { group: string; items: string[] }[] = [
 
 // Self-assessed proficiency (0–100) for skill bars. Adjust to taste.
 export const skillLevels = [
-  { name: "TypeScript / React", level: 90 },
+  { name: "React / JavaScript", level: 90 },
   { name: "Python", level: 90 },
   { name: "SQL & Data Analysis", level: 95 },
   { name: "GraphQL / Node.js", level: 85 },
