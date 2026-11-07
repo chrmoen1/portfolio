@@ -1,7 +1,7 @@
 import { Fragment, useEffect, type ReactNode } from "react";
 import type { CaseStudy as Study } from "../data/caseStudies";
 import CodeTabs from "./CodeTabs";
-import ScreenViewer from "./ScreenViewer";
+import ScreenGallery from "./ScreenGallery";
 import { BeforeAfter, FlowArrow, LinearFlow, SystemFlow } from "./flows";
 import { Heading } from "./ui";
 
@@ -98,12 +98,11 @@ export default function CaseStudy({ study }: { study: Study }) {
         </dl>
       </header>
 
-      {/* Interactive screens */}
+      {/* Explained screen cards */}
       {study.gallery && study.gallery.length > 0 && (
-        <div className="mt-14">
-          <ScreenViewer screens={study.gallery} host={host} />
-          <p className="mt-2 text-center text-xs text-slate-500">Captured from a development environment; contact details masked.</p>
-        </div>
+        <Section title="Inside the product" sub="What each screen does for the broker. Click any card to see the full screenshot. Captured from a development environment; contact details masked.">
+          <ScreenGallery screens={study.gallery} />
+        </Section>
       )}
 
       {/* Demo video */}

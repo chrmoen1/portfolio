@@ -15,8 +15,8 @@ export type CaseStudy = {
   video?: { src: string; poster?: string };
   // Large lead screenshot shown in place of a video
   hero?: { src: string; alt: string; caption?: string };
-  // Interactive screen viewer (tabs, arrows, click to enlarge) shown at the top
-  gallery?: { title: string; src: string; thumb?: string; alt: string; caption?: string }[];
+  // Explained screen cards; click a card to expand the screenshot
+  gallery?: { title: string; src: string; card?: string; alt: string; description: string; points?: string[] }[];
   overview: { title: string; body: string }[];
   intelligence?: {
     intro: string;
@@ -111,30 +111,55 @@ export const caseStudies: CaseStudy[] = [
       {
         title: "Client profile",
         src: "/pipemotion/client-profile.webp",
-        thumb: "/pipemotion/client-profile-thumb.webp",
+        card: "/pipemotion/client-profile-card.webp",
         alt: "pipeMOTION client profile showing responsiveness, intent, and timeline scores",
-        caption: "A context-aware client profile: responsiveness, intent, and buying timeline at a glance.",
+        description:
+          "Every client gets an AI-built profile that refreshes whenever they send a new email. At a glance, the broker sees how engaged the client is, how serious they are, and when they plan to act.",
+        points: [
+          "Responsiveness: how reliably the client replies",
+          "Intent: High / Medium / Low, read from the conversation",
+          "Timeline: when they plan to buy or sell (here, within a month)",
+          "Banner flags AI-drafted emails waiting for approval",
+        ],
       },
       {
         title: "AI-drafted follow-ups",
         src: "/pipemotion/ai-drafts.webp",
-        thumb: "/pipemotion/ai-drafts-thumb.webp",
+        card: "/pipemotion/ai-drafts-card.webp",
         alt: "Two AI-drafted follow-up emails awaiting approval, with Send Now and Schedule for Later buttons",
-        caption: "Follow-ups drafted by the AI pipeline, waiting for the broker to send or schedule.",
+        description:
+          "The review queue. Each card is a reply the multi-agent pipeline drafted for a specific conversation, written in the broker's voice and tagged by type (activation, follow-up, or nurture).",
+        points: [
+          "Send now, edit, delete, or schedule for later",
+          "Subject and body tailored to the thread's context",
+          "Brokers can switch on auto-send once they trust the drafts",
+        ],
       },
       {
         title: "Activated clients",
         src: "/pipemotion/activated-clients.webp",
-        thumb: "/pipemotion/activated-clients-thumb.webp",
+        card: "/pipemotion/activated-clients-card.webp",
         alt: "Activated clients list filtered by deal stage",
-        caption: "Activated clients, filterable by deal type and prioritized by intent and timeline.",
+        description:
+          "The clients pipeMOTION is actively working for the broker. Each card surfaces the signals that matter for prioritizing who to talk to next.",
+        points: [
+          "Filter by deal type: buying, selling, investing, renting",
+          "Intent badge and buying timeline on every card",
+          "Search by name, property type, location, or phone",
+        ],
       },
       {
         title: "Automation & credits",
         src: "/pipemotion/automation.webp",
-        thumb: "/pipemotion/automation-thumb.webp",
+        card: "/pipemotion/automation-card.webp",
         alt: "Automation and credits dashboard with usage and automation toggles",
-        caption: "Automation controls and usage, so brokers decide exactly what runs on their behalf.",
+        description:
+          "Brokers control exactly what runs on their behalf. Each automation can be switched on or off, and usage is tracked against a monthly credit budget.",
+        points: [
+          "Toggle automations like conversation context and \"needs attention\" detection",
+          "Monthly usage, run counts, and remaining credits",
+          "Optional auto-reload so automations never pause",
+        ],
       },
     ],
     overview: [
