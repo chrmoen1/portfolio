@@ -103,7 +103,7 @@ export const caseStudies: CaseStudy[] = [
       },
       {
         title: "My role",
-        body: "As co-founder and CTO I designed the system architecture and built the platform end to end: the Next.js app, the GraphQL API, the multi-agent AI pipeline, billing, analytics, testing, and cloud deployment.",
+        body: "As co-founder and CTO I designed the product hand in hand with realtors and mortgage brokers, then architected and built it end to end: the Next.js app, the GraphQL API, the multi-agent AI pipeline, billing, analytics, testing, and cloud deployment.",
       },
     ],
     intelligence: {

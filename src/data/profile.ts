@@ -39,8 +39,12 @@ export const experience: Job[] = [
     role: "Principal Software Architect · Co-Founder & CTO",
     period: "Aug 2026 — Present",
     highlights: [
-      "Lead development of a full-stack platform and AI-powered systems for real estate and mortgage brokers.",
-      "Automate workflows and client communication, and surface sales opportunities brokers can act on.",
+      "Designed the product in close collaboration with realtors and mortgage brokers, turning their day-to-day workflows into requirements and iterating on their feedback.",
+      "Architected and built the platform end to end: Next.js / React frontend, Node.js + GraphQL API, MongoDB, deployed on Google Cloud Run.",
+      "Designed a multi-agent AI pipeline of 20+ specialized agents that classifies, drafts, QA-checks, and schedules client emails, with the broker always in the loop.",
+      "Built context-aware client profiles that detect buying timelines and intent, map family relationships, and track key dates to prioritize follow-ups and improve deal throughput.",
+      "Built a simulation harness that generates synthetic client conversations to test AI behaviour end to end before release.",
+      "Integrated Gmail, Firebase Auth, Paddle billing, and PostHog analytics, with Playwright end-to-end tests covering core and payment flows.",
     ],
   },
   {
