@@ -80,7 +80,7 @@ export const experience: Job[] = [
       "Deployed .NET solutions delivering IPTV services on Windows-based OpenStack infrastructure.",
       "Built automated deployment solutions with Octopus Deploy for consistent, repeatable releases.",
       "Built and maintained CI/CD pipelines, cutting deployment time by 20%.",
-      "Built Kibana/PowerShell monitoring that kept services at 99% availability.",
+      "Built Kibana/PowerShell monitoring with automated detection of network anomaly spikes across key IPTV services, keeping them at 99% availability.",
     ],
   },
   {
