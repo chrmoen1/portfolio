@@ -98,13 +98,6 @@ export default function CaseStudy({ study }: { study: Study }) {
         </dl>
       </header>
 
-      {/* Explained screen cards */}
-      {study.gallery && study.gallery.length > 0 && (
-        <Section title="Inside the product" sub="What each screen does for the broker. Click any card to see the full screenshot. Captured from a development environment; contact details masked.">
-          <ScreenGallery screens={study.gallery} />
-        </Section>
-      )}
-
       {/* Demo video */}
       {!study.gallery && (study.video || study.hero || (DEV && study.placeholders?.video)) && (
       <div className="mt-14">
@@ -159,6 +152,13 @@ export default function CaseStudy({ study }: { study: Study }) {
           ))}
         </div>
       </Section>
+
+      {/* Explained screen cards */}
+      {study.gallery && study.gallery.length > 0 && (
+        <Section title="Inside the product" sub="What each screen does for the broker. Click any card to see the full screenshot. Captured from a development environment; contact details masked.">
+          <ScreenGallery screens={study.gallery} />
+        </Section>
+      )}
 
       {/* System flow diagram */}
       {study.systemFlow && (
