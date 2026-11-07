@@ -1,63 +1,71 @@
+import { useState } from "react";
 import { projects } from "../data/profile";
-import { Icon } from "./icons";
-import { ArrowCircle, PillButton, SectionHeading } from "./ui";
 
-const visuals = [
-  "from-lime/90 via-lime-soft/60 to-forest",
-  "from-forest via-ink-3 to-lime/40",
-  "from-ink-3 via-forest/70 to-lime/70",
+const gradients = [
+  "from-sky/80 via-violet/50 to-cyan/60",
+  "from-cyan/70 via-sky/40 to-mint/50",
+  "from-violet/70 via-sky/40 to-night",
 ];
 
 export default function Projects() {
-  return (
-    <section id="projects" className="py-24 sm:py-32">
-      <div className="mx-auto max-w-7xl px-4 sm:px-8">
-        <SectionHeading eyebrow="Recent Work" title="Projects that turned ideas into real results" center />
+  const categories = ["All", ...new Set(projects.map((p) => p.category))];
+  const [active, setActive] = useState("All");
+  const shown = active === "All" ? projects : projects.filter((p) => p.category === active);
 
-        <div className="space-y-6">
-          {projects.map((p, i) => (
-            <article
-              key={p.title}
-              className="reveal grid overflow-hidden rounded-3xl bg-gradient-to-br from-ink-3 to-ink p-3 ring-1 ring-white/10 md:grid-cols-2"
+  return (
+    <section id="projects" className="py-24">
+      <div className="mx-auto max-w-7xl px-4 sm:px-8">
+        <h2 className="reveal text-center text-3xl sm:text-4xl">
+          <span className="mr-4 inline-block h-0.5 w-14 bg-sky align-middle" />
+          Latest Projects
+        </h2>
+
+        <div className="reveal mx-auto mt-8 flex w-fit flex-wrap justify-center gap-1 rounded-full glass p-1.5">
+          {categories.map((c) => (
+            <button
+              key={c}
+              onClick={() => setActive(c)}
+              className={`rounded-full px-5 py-2 text-sm font-semibold transition ${
+                active === c ? "bg-sky text-white" : "text-slate-300 hover:text-white"
+              }`}
             >
-              <div className="flex flex-col p-6 sm:p-10">
-                <span className="grid size-14 place-items-center rounded-xl bg-ink text-lime ring-1 ring-lime/40">
-                  <Icon name={["rocket", "data", "layers"][i % 3]} className="size-6" />
-                </span>
-                <h3 className="mt-10 text-2xl font-semibold sm:text-3xl">{p.title}</h3>
-                <p className="mt-4 max-w-md text-white/70">{p.description}</p>
-                <ul className="mt-6 flex flex-wrap gap-2">
-                  {p.tags.map((t) => (
-                    <li key={t} className="rounded-full px-3 py-1 text-xs font-medium text-white/80 ring-1 ring-white/15">
-                      {t}
-                    </li>
-                  ))}
-                </ul>
-                <div className="mt-auto flex items-center gap-4 pt-10">
-                  {p.href && <ArrowCircle href={p.href} label={`Open ${p.title}`} />}
-                  {p.repo && (
-                    <a href={p.repo} target="_blank" rel="noreferrer" className="text-sm font-semibold text-white/80 hover:text-lime">
-                      View code ↗
-                    </a>
-                  )}
-                </div>
-              </div>
-              {/* TODO: replace gradient panel with a project screenshot */}
-              <div
-                className={`relative min-h-64 overflow-hidden rounded-2xl bg-gradient-to-br ${visuals[i % visuals.length]}`}
-              >
-                <span className="absolute right-6 bottom-2 font-display text-[9rem] leading-none font-bold text-ink/20">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-              </div>
-            </article>
+              {c}
+            </button>
           ))}
         </div>
 
-        <div className="reveal mt-12 flex justify-center">
-          <PillButton href="https://github.com/" external>
-            View All Work
-          </PillButton>
+        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {shown.map((p) => {
+            const i = projects.indexOf(p);
+            return (
+              <article key={p.title} className="glass group overflow-hidden rounded-xl transition hover:-translate-y-1">
+                {/* TODO: replace with a screenshot: <img src="/projects/x.jpg" className="aspect-video w-full object-cover" /> */}
+                <div className={`relative aspect-video bg-gradient-to-br ${gradients[i % gradients.length]}`}>
+                  <span className="absolute top-1/2 left-1/2 size-24 -translate-1/2 rounded-full bg-white/25 blur-md transition group-hover:scale-125" />
+                </div>
+                <div className="p-6">
+                  <div className="flex items-center justify-between text-xs font-semibold">
+                    <span className="text-sky">{p.category}</span>
+                    <span className="text-slate-400">{p.tags.slice(0, 3).join(" · ")}</span>
+                  </div>
+                  <h3 className="mt-2 text-xl">{p.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-slate-400">{p.description}</p>
+                  <div className="mt-4 flex gap-4 text-sm font-semibold">
+                    {p.href && (
+                      <a href={p.href} target="_blank" rel="noreferrer" className="text-cyan hover:underline">
+                        Live ↗
+                      </a>
+                    )}
+                    {p.repo && (
+                      <a href={p.repo} target="_blank" rel="noreferrer" className="text-cyan hover:underline">
+                        Code ↗
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </article>
+            );
+          })}
         </div>
       </div>
     </section>

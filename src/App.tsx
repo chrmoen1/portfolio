@@ -1,14 +1,12 @@
 import About from "./components/About";
+import BackToTop from "./components/BackToTop";
 import Contact from "./components/Contact";
 import Experience from "./components/Experience";
 import Footer from "./components/Footer";
 import Hero from "./components/Hero";
-import Marquee from "./components/Marquee";
 import Navbar from "./components/Navbar";
 import Projects from "./components/Projects";
 import Services from "./components/Services";
-import Skills from "./components/Skills";
-import Stats from "./components/Stats";
 import { useReveal } from "./hooks/useReveal";
 
 export default function App() {
@@ -18,16 +16,14 @@ export default function App() {
       <Navbar />
       <main>
         <Hero />
-        <Marquee />
         <About />
-        <Services />
         <Experience />
-        <Stats />
+        <Services />
         <Projects />
-        <Skills />
         <Contact />
       </main>
       <Footer />
+      <BackToTop />
     </>
   );
 }

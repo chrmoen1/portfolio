@@ -1,59 +1,68 @@
-import { profile } from "../data/profile";
-import { Mark } from "./ui";
+import { useState, type FormEvent } from "react";
+import { certifications, profile } from "../data/profile";
+import { Icon } from "./icons";
+import { Heading } from "./ui";
 
 export default function Contact() {
+  const [form, setForm] = useState({ name: "", subject: "", message: "" });
+
+  // No backend: compose an email in the visitor's mail client.
+  const submit = (e: FormEvent) => {
+    e.preventDefault();
+    const body = `${form.message}\n\n— ${form.name}`;
+    window.location.href = `mailto:${profile.email}?subject=${encodeURIComponent(form.subject || "Hello")}&body=${encodeURIComponent(body)}`;
+  };
+
+  const field = "w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-white placeholder:text-slate-500 focus:border-sky focus:outline-none";
+
   return (
-    <section id="contact" className="px-4 pb-24 sm:px-8">
-      <div className="reveal relative mx-auto max-w-7xl overflow-hidden rounded-[2.5rem] bg-lime px-6 py-14 text-ink sm:px-14 sm:py-20">
-        <div className="pointer-events-none absolute -right-24 -bottom-24 size-96 rounded-full bg-white/30 blur-3xl" />
-        <svg
-          className="absolute top-10 right-10 hidden w-40 md:block"
-          viewBox="0 0 220 90"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="5"
-          strokeLinecap="round"
-          aria-hidden="true"
-        >
-          <path d="M5 60C40 25 70 15 85 30c12 12-2 40-12 30-12-12 20-50 60-45 30 4 55 25 70 50" />
-          <path d="M188 52l17 25 8-30" strokeLinejoin="round" />
-        </svg>
-        <div className="relative max-w-2xl">
-          <p className="mb-4 flex items-center gap-2 text-sm font-semibold tracking-wide uppercase">
-            <Mark /> Let's work together
-          </p>
-          <h2 className="text-4xl font-semibold text-ink sm:text-5xl">Let's build tomorrow's software, together.</h2>
-          <p className="mt-5 max-w-lg text-ink/75">
-            Open to conversations about architecture, data and AI systems, advisory work, or new opportunities.
-          </p>
-          <div className="mt-10 flex flex-wrap items-center gap-6">
-            <a
-              href={`mailto:${profile.email}`}
-              className="group inline-flex items-center gap-4 rounded-full bg-ink py-1.5 pr-1.5 pl-6 font-semibold text-white"
-            >
-              Email Me
-              <span className="grid size-10 place-items-center rounded-full bg-white text-ink transition-transform group-hover:rotate-45">
-                <svg className="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                  <path d="M7 17 17 7M8 7h9v9" />
-                </svg>
-              </span>
-            </a>
-            <span className="hidden h-12 w-px bg-ink/20 sm:block" />
-            <div className="flex items-center gap-3">
-              <span className="grid size-12 place-items-center rounded-full bg-ink text-lime">
-                <svg className="size-5" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9.5h4V21H3zM9.5 9.5h3.8v1.6h.06c.53-1 1.83-2.06 3.77-2.06 4.03 0 4.77 2.65 4.77 6.1V21h-4v-5.1c0-1.22-.02-2.79-1.7-2.79-1.7 0-1.96 1.33-1.96 2.7V21h-4z" />
-                </svg>
-              </span>
-              <div className="leading-tight">
-                <p className="text-sm text-ink/70">Connect on</p>
-                <a href={profile.socials[0].href} target="_blank" rel="noreferrer" className="font-semibold hover:underline">
-                  LinkedIn
-                </a>
-              </div>
-            </div>
+    <section id="contact" className="py-24">
+      <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-8 lg:grid-cols-2">
+        <div>
+          <Heading sub="Have a project, a role, or a hard problem? I'd love to hear about it.">Get In Touch</Heading>
+          <ul className="reveal mt-10 space-y-4">
+            {[
+              { icon: "mail", label: "Email", value: profile.email, href: `mailto:${profile.email}` },
+              { icon: "link", label: "LinkedIn", value: "chris-moen", href: profile.socials[0].href },
+              { icon: "pin", label: "Location", value: profile.location },
+            ].map((c) => (
+              <li key={c.label} className="glass flex items-center gap-4 rounded-xl p-4">
+                <span className="grid size-12 place-items-center rounded-lg bg-sky/15 text-sky">
+                  <Icon name={c.icon} />
+                </span>
+                <div>
+                  <p className="text-sm text-slate-400">{c.label}</p>
+                  {c.href ? (
+                    <a href={c.href} target="_blank" rel="noreferrer" className="font-semibold text-white hover:text-cyan">
+                      {c.value}
+                    </a>
+                  ) : (
+                    <p className="font-semibold text-white">{c.value}</p>
+                  )}
+                </div>
+              </li>
+            ))}
+          </ul>
+          <div className="reveal mt-8">
+            <p className="text-sm font-semibold tracking-wide text-slate-400 uppercase">Certifications</p>
+            <ul className="mt-3 flex flex-wrap gap-2">
+              {certifications.map((c) => (
+                <li key={c} className="rounded-full border border-white/10 px-3 py-1 text-sm">
+                  {c}
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
+
+        <form onSubmit={submit} className="reveal glass space-y-4 rounded-2xl p-7">
+          <input className={field} placeholder="Your name" required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
+          <input className={field} placeholder="Subject" value={form.subject} onChange={(e) => setForm({ ...form, subject: e.target.value })} />
+          <textarea className={`${field} min-h-40`} placeholder="Message" required value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} />
+          <button className="w-full rounded-lg bg-sky py-3 font-semibold text-white shadow-lg shadow-sky/30 transition hover:brightness-110">
+            Send Message
+          </button>
+        </form>
       </div>
     </section>
   );

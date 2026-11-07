@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { profile } from "../data/profile";
-import { Mark, PillButton } from "./ui";
 
 const links = [
-  { href: "#about", label: "About" },
-  { href: "#services", label: "Services" },
-  { href: "#experience", label: "Experience" },
-  { href: "#projects", label: "Projects" },
-  { href: "#contact", label: "Contact" },
+  ["#top", "Home"],
+  ["#about", "About"],
+  ["#experience", "Experience"],
+  ["#services", "What I Do"],
+  ["#projects", "Projects"],
+  ["#contact", "Contact"],
 ];
 
 export default function Navbar() {
@@ -15,77 +15,76 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
+    const onScroll = () => setScrolled(window.scrollY > 10);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+  }, [open]);
+
   return (
-    <header
-      className={`fixed inset-x-0 top-0 z-50 border-b transition-colors ${
-        scrolled || open ? "border-white/10 bg-ink/85 backdrop-blur-md" : "border-white/5 bg-transparent"
-      }`}
-    >
-      <nav className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-8">
-        <a href="#top" className="flex items-center gap-2.5 font-display text-2xl font-semibold text-white">
-          <Mark className="size-8 text-lime" />
-          {profile.name.split(" ")[0]}
-          <span className="text-lime">.</span>
-        </a>
-
-        <ul className="hidden items-center gap-8 lg:flex">
-          {links.map((l) => (
-            <li key={l.href}>
-              <a href={l.href} className="text-[15px] font-medium text-white/85 transition-colors hover:text-lime">
-                {l.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-
-        <div className="flex items-center gap-6">
-          <p className="hidden text-[15px] text-white/85 xl:block">
-            {profile.socials.map((s, i) => (
-              <span key={s.label}>
-                {i > 0 && <span className="mx-1.5 text-white/30">/</span>}
-                <a href={s.href} target="_blank" rel="noreferrer" className="hover:text-lime">
-                  {s.label === "LinkedIn" ? "LN" : s.label === "GitHub" ? "GH" : s.label}
-                </a>
-              </span>
-            ))}
-          </p>
-          <div className="hidden sm:block">
-            <PillButton href="#contact">Contact Me</PillButton>
-          </div>
+    <>
+      <header className={`fixed inset-x-0 top-0 z-50 transition-colors ${scrolled ? "bg-night/80 backdrop-blur-md" : ""}`}>
+        <nav className="mx-auto flex h-18 max-w-7xl items-center justify-between px-4 sm:px-8">
+          <a href="#top" className="flex items-center gap-2 text-xl font-bold text-white">
+            <span className="grid size-9 place-items-center rounded-lg border-2 border-white text-sm">
+              {profile.name.split(" ").map((n) => n[0]).join("")}
+            </span>
+            Portfolio
+          </a>
           <button
-            className="grid size-12 place-items-center rounded-full ring-1 ring-white/25 lg:hidden"
-            onClick={() => setOpen((o) => !o)}
-            aria-label="Toggle menu"
-            aria-expanded={open}
+            onClick={() => setOpen(true)}
+            aria-label="Open menu"
+            className="grid size-11 place-items-center rounded-lg text-white hover:bg-white/10"
           >
-            <svg className="size-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              {open ? <path d="M6 6l12 12M18 6L6 18" /> : <path d="M4 7h16M4 12h16M4 17h16" />}
+            <svg className="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </nav>
+      </header>
+
+      {/* Full-screen overlay menu */}
+      <div
+        className={`fixed inset-0 z-[60] flex flex-col bg-night/95 backdrop-blur-xl transition-all duration-500 ${
+          open ? "visible opacity-100" : "invisible opacity-0"
+        }`}
+      >
+        <div className="mx-auto flex h-18 w-full max-w-7xl items-center justify-end px-4 sm:px-8">
+          <button onClick={() => setOpen(false)} aria-label="Close menu" className="grid size-11 place-items-center rounded-lg text-white hover:bg-white/10">
+            <svg className="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M6 6l12 12M18 6 6 18" />
             </svg>
           </button>
         </div>
-      </nav>
-
-      {open && (
-        <ul className="border-t border-white/10 px-4 pt-2 pb-5 lg:hidden">
-          {links.map((l) => (
-            <li key={l.href}>
+        <ul className="m-auto space-y-2 text-center">
+          {links.map(([href, label], i) => (
+            <li
+              key={href}
+              className={`transition-all duration-500 ${open ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}
+              style={{ transitionDelay: open ? `${100 + i * 60}ms` : "0ms" }}
+            >
               <a
-                href={l.href}
+                href={href}
                 onClick={() => setOpen(false)}
-                className="block py-3 font-display text-xl text-white hover:text-lime"
+                className="text-4xl font-bold text-white transition-colors hover:text-cyan sm:text-5xl"
               >
-                {l.label}
+                {label}
               </a>
             </li>
           ))}
         </ul>
-      )}
-    </header>
+        <p className="pb-10 text-center text-slate-400">
+          {profile.socials.map((s) => (
+            <a key={s.label} href={s.href} target="_blank" rel="noreferrer" className="mx-3 hover:text-cyan">
+              {s.label}
+            </a>
+          ))}
+        </p>
+      </div>
+    </>
   );
 }

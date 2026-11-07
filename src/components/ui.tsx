@@ -1,117 +1,75 @@
 import type { ReactNode } from "react";
+import { profile } from "../data/profile";
 
-/** Small lime brand mark used in front of eyebrow labels and the logo. */
-export function Mark({ className = "size-4" }: { className?: string }) {
+export function Heading({ children, sub, className = "" }: { children: ReactNode; sub?: string; className?: string }) {
   return (
-    <svg className={className} viewBox="0 0 24 24" aria-hidden="true">
-      <rect x="2" y="3" width="5" height="18" rx="2.5" fill="currentColor" />
-      <path d="M10 3h4a9 9 0 0 1 0 18h-4z" fill="currentColor" />
-    </svg>
+    <div className={`reveal ${className}`}>
+      <h2 className="flex items-center gap-4 text-3xl sm:text-4xl">
+        <span className="h-0.5 w-14 bg-sky" />
+        {children}
+      </h2>
+      {sub && <p className="mt-4 max-w-md text-slate-400">{sub}</p>}
+    </div>
   );
 }
 
-export function Eyebrow({ children }: { children: ReactNode }) {
-  return (
-    <p className="mb-4 flex items-center gap-2 text-sm font-semibold tracking-wide text-lime uppercase">
-      <Mark /> {children}
-    </p>
-  );
-}
-
-/** Four-dot glyph that sits in the black circle of pill buttons. */
-function Dots() {
-  return (
-    <svg className="size-3.5" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
-      <circle cx="9.5" cy="3" r="2" />
-      <circle cx="3.5" cy="8" r="2" />
-      <circle cx="9.5" cy="13" r="2" />
-      <circle cx="13.5" cy="8" r="1.4" />
-    </svg>
-  );
-}
-
-type PillProps = {
+export function Button({
+  href,
+  children,
+  tone = "sky",
+  external,
+}: {
   href: string;
   children: ReactNode;
-  variant?: "lime" | "dark";
+  tone?: "sky" | "coral";
   external?: boolean;
-};
-
-export function PillButton({ href, children, variant = "lime", external }: PillProps) {
-  const base =
-    "group inline-flex items-center gap-4 rounded-full py-1.5 pr-1.5 pl-6 font-semibold transition-colors";
-  const styles =
-    variant === "lime"
-      ? "bg-lime text-ink hover:bg-white"
-      : "bg-ink text-white ring-1 ring-white/15 hover:bg-white hover:text-ink";
-  const dot =
-    variant === "lime" ? "bg-ink text-white" : "bg-white text-ink group-hover:bg-ink group-hover:text-white";
+}) {
+  const color = tone === "sky" ? "bg-sky shadow-sky/30" : "bg-coral shadow-coral/30";
   return (
     <a
       href={href}
-      className={`${base} ${styles}`}
       {...(external ? { target: "_blank", rel: "noreferrer" } : {})}
+      className={`inline-block rounded-md px-6 py-3 font-semibold text-white shadow-lg transition hover:-translate-y-0.5 hover:brightness-110 ${color}`}
     >
       {children}
-      <span
-        className={`grid size-10 place-items-center rounded-full transition-transform duration-500 group-hover:rotate-[360deg] ${dot}`}
-      >
-        <Dots />
-      </span>
     </a>
   );
 }
 
-export function ArrowCircle({ href, label }: { href: string; label: string }) {
+/** Rounded cyan block with the portrait (or an initials placeholder until a photo is set). */
+export function Portrait({ className = "" }: { className?: string }) {
+  const initials = profile.name.split(" ").map((n) => n[0]).join("");
   return (
-    <a
-      href={href}
-      aria-label={label}
-      target="_blank"
-      rel="noreferrer"
-      className="grid size-11 place-items-center rounded-full bg-lime text-ink transition-transform hover:rotate-45"
-    >
-      <svg className="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-        <path d="M7 17 17 7M8 7h9v9" />
-      </svg>
-    </a>
+    <div className={`relative overflow-hidden rounded-[2.5rem] bg-cyan ${className}`}>
+      {profile.photo ? (
+        <img src={profile.photo} alt={profile.name} className="absolute inset-0 h-full w-full object-cover object-top" />
+      ) : (
+        <svg viewBox="0 0 200 220" className="absolute inset-x-0 bottom-0 w-full text-night/85" aria-hidden="true">
+          <circle cx="100" cy="78" r="42" fill="currentColor" />
+          <path d="M20 220c0-52 36-84 80-84s80 32 80 84z" fill="currentColor" />
+          <text x="100" y="88" textAnchor="middle" fontSize="30" fontWeight="800" fill="#22d3ee" fontFamily="Barlow, sans-serif">
+            {initials}
+          </text>
+        </svg>
+      )}
+    </div>
   );
 }
 
-export function Asterisk({ className = "" }: { className?: string }) {
+export function Sparkle({ className = "" }: { className?: string }) {
   return (
-    <svg className={className} viewBox="0 0 64 64" fill="currentColor" aria-hidden="true">
-      {[0, 60, 120].map((r) => (
-        <rect key={r} x="27" y="2" width="10" height="60" rx="5" transform={`rotate(${r} 32 32)`} />
-      ))}
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M12 0c.6 6.5 5.5 11.4 12 12-6.5.6-11.4 5.5-12 12-.6-6.5-5.5-11.4-12-12C6.5 11.4 11.4 6.5 12 0Z" />
     </svg>
   );
 }
 
-export function SectionHeading({
-  eyebrow,
-  title,
-  accent,
-  center,
-  aside,
-}: {
-  eyebrow: string;
-  title: string;
-  accent?: string;
-  center?: boolean;
-  aside?: ReactNode;
-}) {
+export function DotGrid({ className = "" }: { className?: string }) {
   return (
-    <div
-      className={`reveal mb-14 flex flex-col gap-6 ${center ? "items-center text-center" : "md:flex-row md:items-end md:justify-between"}`}
-    >
-      <div className={center ? "flex flex-col items-center" : ""}>
-        <Eyebrow>{eyebrow}</Eyebrow>
-        <h2 className="max-w-2xl text-3xl font-semibold sm:text-[2.6rem]">
-          {title} {accent && <span className="text-white/45">{accent}</span>}
-        </h2>
-      </div>
-      {aside && <div className="max-w-sm">{aside}</div>}
-    </div>
+    <svg className={className} viewBox="0 0 40 40" fill="currentColor" aria-hidden="true">
+      {Array.from({ length: 16 }, (_, i) => (
+        <circle key={i} cx={5 + (i % 4) * 10} cy={5 + Math.floor(i / 4) * 10} r="1.8" />
+      ))}
+    </svg>
   );
 }

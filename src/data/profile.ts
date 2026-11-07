@@ -12,6 +12,10 @@ export const profile = {
     "Before that I spent over seven years at Bell across data science, access networking, and TV SRE — building anomaly-detection pipelines, shipping CI/CD at scale, and keeping critical services at 99% availability for millions of users.",
     "I studied Electrical Engineering (Systems & Control) at the University of Toronto.",
   ],
+  // Rotating words for typed/animated hero text
+  roles: ["Software Architect", "AI Engineer", "Data Scientist", "Full-Stack Developer"],
+  // Put your headshot in public/ (e.g. public/me.jpg) and set photo: "/me.jpg"
+  photo: "" as string,
   email: "moenchris1@gmail.com",
   resumeUrl: "/resume.pdf",
   socials: [
@@ -92,6 +96,7 @@ export const experience: Job[] = [
 
 export type Project = {
   title: string;
+  category: string;
   description: string;
   tags: string[];
   href?: string;
@@ -102,6 +107,7 @@ export type Project = {
 export const projects: Project[] = [
   {
     title: "pipeMOTION",
+    category: "Product",
     description:
       "AI-powered CRM for real estate and mortgage brokers: workflow automation, client communication, and opportunity detection.",
     tags: ["React", "GraphQL", "Node.js", "MongoDB", "AI"],
@@ -109,12 +115,14 @@ export const projects: Project[] = [
   },
   {
     title: "Anomaly Detection Pipeline",
+    category: "Data",
     description:
       "SQL and Python pipeline that flags production anomalies across large-scale systems and feeds diagnostic tooling.",
     tags: ["SQL", "Python", "Data Analysis"],
   },
   {
     title: "Project Three",
+    category: "Open Source",
     description: "Short description of what it does, the problem it solves, and your role.",
     tags: ["TypeScript", "Tailwind"],
     repo: "#",
@@ -126,6 +134,16 @@ export const skills: { group: string; items: string[] }[] = [
   { group: "Frontend", items: ["React", "Tailwind CSS", "Vite"] },
   { group: "Backend & Data", items: ["Node.js", "GraphQL", "MongoDB", "REST APIs", "Machine Learning"] },
   { group: "DevOps", items: ["Linux", "Ansible", "CI/CD", "Kibana", "Docker"] },
+];
+
+// Self-assessed proficiency (0–100) for skill bars. Adjust to taste.
+export const skillLevels = [
+  { name: "TypeScript / React", level: 90 },
+  { name: "Python", level: 90 },
+  { name: "SQL & Data Analysis", level: 95 },
+  { name: "GraphQL / Node.js", level: 85 },
+  { name: "DevOps & CI/CD", level: 90 },
+  { name: "Machine Learning", level: 80 },
 ];
 
 export const services = [
