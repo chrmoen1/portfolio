@@ -23,10 +23,25 @@ export type CaseStudy = {
   detections?: {
     title: string;
     intro: string;
-    items: { name: string; signal: string; rootCause: string; action: string }[];
+    items: { name: string; signal: string; rootCause: string; action: string; featured?: boolean }[];
     audiences: { name: string; gets: string }[];
   };
-  architecture: {
+  // Column diagram: sources → engine → audiences
+  systemFlow?: {
+    title: string;
+    intro: string;
+    columns: { name: string; nodes: { title: string; detail?: string; highlight?: boolean }[] }[];
+  };
+  // Before/after swim-lanes for one standout capability
+  spotlight?: {
+    title: string;
+    intro: string;
+    before: { label: string; steps: string[]; summary: string };
+    after: { label: string; steps: string[]; summary: string };
+    outcome: string;
+    caption?: string;
+  };
+  architecture?: {
     intro: string;
     layers: { name: string; highlight?: boolean; nodes: { title: string; detail: string }[] }[];
     footnote?: string;
@@ -226,7 +241,7 @@ export const caseStudies: CaseStudy[] = [
     title: "Home Network Root-Cause Detection",
     kicker: "Case Study · Bell",
     tagline:
-      "A SQL-based detection platform that turns raw home-network data into clear root-cause insights, delivered straight to the technicians and front-line agents who fix the problem.",
+      "A SQL-based detection platform that turns raw home-network data into clear root-cause insights, delivered to the technicians and front-line agents who fix the problem, and that proactively replaces failing modem power supplies.",
     meta: [
       { label: "Role", value: "Senior Data Scientist" },
       { label: "Company", value: "Bell" },
@@ -242,7 +257,7 @@ export const caseStudies: CaseStudy[] = [
       },
       {
         title: "The solution",
-        body: "A detection platform that continuously reads home-network data, flags known issue patterns like weak signal, poor performance, and bad Wi-Fi experience, and pinpoints the likely root cause.",
+        body: "A detection platform that continuously reads home-network data, flags known issue patterns like weak signal, poor performance, bad Wi-Fi experience, and failing modem power supplies, and pinpoints the likely root cause.",
       },
       {
         title: "My role",
@@ -273,6 +288,13 @@ export const caseStudies: CaseStudy[] = [
           rootCause: "In-home Wi-Fi conditions rather than the service itself.",
           action: "Give agents a clear explanation and targeted steps instead of generic troubleshooting.",
         },
+        {
+          name: "Bad power supply",
+          featured: true,
+          signal: "Modem behaviour, especially after a network outage, that points to a failing power supply.",
+          rootCause: "A faulty modem power supply, not the network or the customer's setup.",
+          action: "Proactively ship a replacement power supply to the customer.",
+        },
       ],
       audiences: [
         { name: "Front-line agents", gets: "A plain-language root cause during the call, so they can resolve or route correctly." },
@@ -280,40 +302,62 @@ export const caseStudies: CaseStudy[] = [
         { name: "Operations teams", gets: "Visibility into recurring issue patterns across the customer base." },
       ],
     },
-    architecture: {
+    systemFlow: {
+      title: "How it works",
       intro:
-        "Detection runs as SQL over home-network data, and an integration layer pushes results to the people and tools that act on them.",
-      layers: [
+        "Home-network data flows into a SQL detection engine. Each detection resolves to a root cause, and the result goes to whoever can fix it fastest.",
+      columns: [
         {
-          name: "Data",
+          name: "Data in",
           nodes: [
-            { title: "Home network data", detail: "Gateway and Wi-Fi telemetry" },
-            { title: "Service performance", detail: "Speed, latency, and stability metrics" },
+            { title: "Home network data", detail: "Gateway & Wi-Fi telemetry" },
+            { title: "Service performance", detail: "Speed, latency, stability" },
+            { title: "Outage events", detail: "Network outages & recovery" },
           ],
         },
         {
-          name: "Detection",
-          highlight: true,
+          name: "SQL detection engine",
           nodes: [
-            { title: "SQL detection rules", detail: "Low RSSI, poor performance, bad Wi-Fi" },
+            { title: "Low RSSI", detail: "Weak Wi-Fi signal" },
+            { title: "Poor network performance", detail: "Below expected service" },
+            { title: "Bad Wi-Fi experience", detail: "In-home Wi-Fi conditions" },
+            { title: "Bad power supply", detail: "Failing modem power", highlight: true },
+          ],
+        },
+        {
+          name: "Root cause",
+          nodes: [
             { title: "Root-cause analysis", detail: "Maps each detection to a likely cause" },
+            { title: "Recommended action", detail: "Plain-language next step" },
           ],
         },
         {
-          name: "Delivery",
-          nodes: [
-            { title: "Integration layer", detail: "Pushes results to frontline tools" },
-            { title: "Automation & tooling", detail: "Python, Bash, and Ansible on Linux" },
-          ],
-        },
-        {
-          name: "People",
+          name: "Action",
           nodes: [
             { title: "Front-line agents", detail: "Root cause during the call" },
             { title: "Field technicians", detail: "Diagnosis before the visit" },
+            { title: "Proactive replacement", detail: "New power supply shipped" },
           ],
         },
       ],
+    },
+    // TODO: the "before" lane is an illustrative typical path; adjust to match reality
+    spotlight: {
+      title: "Spotlight: power supply detection",
+      intro:
+        "After a network outage, modems with failing power supplies can struggle to come back cleanly, and those customers stay down after everyone else has recovered. I built a detection for that pattern so we could fix it before the customer had to ask.",
+      before: {
+        label: "Without detection",
+        summary: "customer finds the problem",
+        steps: ["Network outage", "Modem fails to recover", "Customer calls support", "Agent troubleshoots", "Technician visit", "Power supply replaced"],
+      },
+      after: {
+        label: "With detection",
+        summary: "we find the problem",
+        steps: ["Network outage", "Bad power supply detected", "Replacement shipped", "Customer back online"],
+      },
+      outcome: "A better experience after outages: customers with failing power supplies got a replacement proactively instead of discovering the problem themselves.",
+      caption: "Simplified flow for illustration.",
     },
     pipeline: {
       title: "From data to fix",

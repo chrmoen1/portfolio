@@ -1,5 +1,6 @@
 import { Fragment, useEffect, type ReactNode } from "react";
 import type { CaseStudy as Study } from "../data/caseStudies";
+import { BeforeAfter, FlowArrow, SystemFlow } from "./flows";
 import { Heading } from "./ui";
 
 const DEV = import.meta.env.DEV;
@@ -143,6 +144,13 @@ export default function CaseStudy({ study }: { study: Study }) {
         </div>
       </Section>
 
+      {/* System flow diagram */}
+      {study.systemFlow && (
+        <Section title={study.systemFlow.title} sub={study.systemFlow.intro}>
+          <SystemFlow columns={study.systemFlow.columns} />
+        </Section>
+      )}
+
       {/* Client intelligence */}
       {study.intelligence && (
       <Section title="Context-aware clients" sub={study.intelligence.intro}>
@@ -200,22 +208,32 @@ export default function CaseStudy({ study }: { study: Study }) {
       {/* Detections: signal → root cause → action */}
       {study.detections && (
         <Section title={study.detections.title} sub={study.detections.intro}>
-          <div className="grid gap-5 md:grid-cols-3">
+          <div className={`grid gap-5 md:grid-cols-2 ${study.detections.items.length === 4 ? "xl:grid-cols-4" : "xl:grid-cols-3"}`}>
             {study.detections.items.map((d, i) => (
-              <div key={d.name} className="reveal glass flex flex-col rounded-xl p-6" style={{ transitionDelay: `${i * 80}ms` }}>
+              <div
+                key={d.name}
+                className={`reveal glass relative flex flex-col rounded-xl p-6 ${d.featured ? "border-sun/50 shadow-lg shadow-sun/10" : ""}`}
+                style={{ transitionDelay: `${i * 80}ms` }}
+              >
+                {d.featured && (
+                  <span className="absolute -top-3 right-5 rounded-full bg-sun px-3 py-0.5 text-xs font-bold text-night">Proactive</span>
+                )}
                 <h3 className="text-xl">{d.name}</h3>
-                <dl className="mt-5 space-y-4 text-sm">
+                <ol className="mt-5 flex flex-1 flex-col text-sm">
                   {[
-                    ["Signal", d.signal, "text-sun"],
-                    ["Likely root cause", d.rootCause, "text-coral"],
-                    ["Action delivered", d.action, "text-mint"],
-                  ].map(([label, value, tone]) => (
-                    <div key={label} className="border-l-2 border-white/10 pl-3">
-                      <dt className={`text-xs font-bold tracking-wider uppercase ${tone}`}>{label}</dt>
-                      <dd className="mt-1 leading-relaxed text-slate-300">{value}</dd>
-                    </div>
+                    ["Signal", d.signal, "text-sun border-sun/30"],
+                    ["Likely root cause", d.rootCause, "text-coral border-coral/30"],
+                    ["Action delivered", d.action, "text-mint border-mint/30"],
+                  ].map(([label, value, tone], k) => (
+                    <li key={label} className="flex flex-col">
+                      {k > 0 && <FlowArrow vertical className="flex-col py-1" />}
+                      <div className={`rounded-lg border bg-night/40 p-3 ${tone.split(" ")[1]}`}>
+                        <p className={`text-xs font-bold tracking-wider uppercase ${tone.split(" ")[0]}`}>{label}</p>
+                        <p className="mt-1 leading-relaxed text-slate-300">{value}</p>
+                      </div>
+                    </li>
                   ))}
-                </dl>
+                </ol>
               </div>
             ))}
           </div>
@@ -237,7 +255,23 @@ export default function CaseStudy({ study }: { study: Study }) {
         </Section>
       )}
 
+      {/* Spotlight: before / after */}
+      {study.spotlight && (
+        <Section title={study.spotlight.title} sub={study.spotlight.intro}>
+          <BeforeAfter
+            before={{ ...study.spotlight.before, tone: "coral" }}
+            after={{ ...study.spotlight.after, tone: "mint" }}
+          />
+          <div className="reveal mt-6 flex items-start gap-3 rounded-xl border border-mint/30 bg-mint/10 p-5">
+            <span className="grid size-8 shrink-0 place-items-center rounded-full bg-mint/20 text-mint">✓</span>
+            <p className="text-slate-200">{study.spotlight.outcome}</p>
+          </div>
+          {study.spotlight.caption && <p className="mt-3 text-xs text-slate-500">{study.spotlight.caption}</p>}
+        </Section>
+      )}
+
       {/* Architecture */}
+      {study.architecture && (
       <Section title="Architecture" sub={study.architecture.intro}>
         <div className="reveal glass rounded-2xl p-5 sm:p-8">
           {study.architecture.layers.map((layer, li) => (
@@ -272,6 +306,7 @@ export default function CaseStudy({ study }: { study: Study }) {
           )}
         </div>
       </Section>
+      )}
 
       {/* AI pipeline */}
       <Section title={study.pipeline.title} sub={study.pipeline.intro}>
