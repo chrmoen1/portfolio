@@ -150,14 +150,14 @@ export const skills: { group: string; items: string[] }[] = [
   { group: "DevOps", items: ["Linux", "Windows Server", "Ansible", "Octopus Deploy", "CI/CD", "Kibana", "Docker", "OpenStack"] },
 ];
 
-// Self-assessed proficiency (0–100) for skill bars. Adjust to taste.
-export const skillLevels = [
-  { name: "React / JavaScript", level: 90 },
-  { name: "Python", level: 90 },
-  { name: "SQL & Data Analysis", level: 95 },
-  { name: "GraphQL / Node.js", level: 85 },
-  { name: "DevOps & CI/CD", level: 90 },
-  { name: "Machine Learning", level: 80 },
+// Core strengths shown beside the experience list
+export const coreStrengths = [
+  "React / JavaScript",
+  "Python",
+  "SQL & Data Analysis",
+  "GraphQL / Node.js",
+  "DevOps & CI/CD",
+  "Machine Learning",
 ];
 
 export const services = [

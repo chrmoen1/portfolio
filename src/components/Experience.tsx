@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { experience, skillLevels } from "../data/profile";
+import { coreStrengths, experience } from "../data/profile";
 import { Heading } from "./ui";
 
 export default function Experience() {
@@ -44,18 +44,16 @@ export default function Experience() {
           <Heading sub="Eight-plus years across startups and one of Canada's largest telecoms, shipping systems that millions of people rely on.">
             My Experience
           </Heading>
-          <div className="reveal mt-10 space-y-5">
-            {skillLevels.slice(0, 4).map((s) => (
-              <div key={s.name}>
-                <div className="mb-2 flex justify-between text-sm font-semibold text-white">
-                  <span>{s.name}</span>
-                  <span>{s.level}%</span>
-                </div>
-                <div className="h-1.5 rounded-full bg-white/10">
-                  <div className="h-full rounded-full bg-gradient-to-r from-sky to-cyan" style={{ width: `${s.level}%` }} />
-                </div>
-              </div>
-            ))}
+          <div className="reveal glass mt-10 rounded-xl p-6">
+            <p className="text-sm font-semibold tracking-wider text-slate-400 uppercase">Core strengths</p>
+            <ul className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+              {coreStrengths.map((s) => (
+                <li key={s} className="flex items-center gap-2.5 font-medium text-white">
+                  <span className="grid size-5 shrink-0 place-items-center rounded-full bg-cyan/15 text-[11px] text-cyan">✓</span>
+                  {s}
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>
