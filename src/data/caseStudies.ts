@@ -98,6 +98,7 @@ export const caseStudies: CaseStudy[] = [
       "GraphQL (Apollo)",
       "MongoDB",
       "OpenAI",
+      "Jev (TypeSafe)",
       "Firebase Auth",
       "Gmail & Microsoft Graph APIs",
       "Google Cloud",
@@ -263,7 +264,7 @@ export const caseStudies: CaseStudy[] = [
           highlight: true,
           nodes: [
             { title: "Agent orchestrator", detail: "Multi-agent email pipeline" },
-            { title: "LLMs & embeddings", detail: "OpenAI models, semantic context" },
+            { title: "LLMs & embeddings", detail: "OpenAI + Jev (TypeSafe), semantic context" },
           ],
         },
         {
@@ -298,7 +299,8 @@ export const caseStudies: CaseStudy[] = [
         {
           category: "AI",
           services: [
-            { name: "OpenAI", purpose: "LLMs power each agent in the pipeline; embeddings rank the most relevant context and examples." },
+            { name: "OpenAI", purpose: "LLMs power the drafting and reasoning agents; embeddings rank the most relevant context and examples." },
+            { name: "Jev (TypeSafe)", purpose: "Handles structured classification and routing steps (email type, real-client checks, extraction gating, task routing), with data redacted before it's sent and automatic fallback to OpenAI." },
           ],
         },
         {
@@ -339,6 +341,7 @@ export const caseStudies: CaseStudy[] = [
         "Daily outbound send limits",
         "Allow-listed hosts for outbound requests",
         "Alerts on OAuth and AI provider failures",
+        "Automatic fallback between AI providers",
         "Alert rules with runbooks in Cloud Logging",
         "AI can be removed from any thread at any time",
       ],
