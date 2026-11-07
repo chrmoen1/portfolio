@@ -343,7 +343,7 @@ export const caseStudies: CaseStudy[] = [
           featured: true,
           signal: "A combination of access-network and modem parameters, especially after an outage, that together point to a failing power supply.",
           rootCause: "A faulty modem power supply, not the network or the customer's setup.",
-          action: "Proactively ship a new power supply before the customer has to call, saving ~$20K/month.",
+          action: "Email the customer an alert and ship a new power supply, generally cheaper than a technician visit or a new modem.",
         },
       ],
       audiences: [
@@ -389,7 +389,7 @@ export const caseStudies: CaseStudy[] = [
             { title: "Frontline tools", detail: "Results uploaded for agents & techs" },
             { title: "Front-line agents", detail: "Root cause during the call" },
             { title: "Field technicians", detail: "Diagnosis before the visit" },
-            { title: "Proactive replacement", detail: "New power supply shipped" },
+            { title: "Proactive replacement", detail: "Email alert + new power supply shipped" },
           ],
         },
       ],
@@ -398,18 +398,18 @@ export const caseStudies: CaseStudy[] = [
     spotlight: {
       title: "Spotlight: power supply detection",
       intro:
-        "After a network outage, modems with failing power supplies can struggle to come back cleanly, and those customers stay down after everyone else has recovered. I built a detection that combines several access-network and modem parameters to identify a faulty power supply, so we could ship a replacement before the customer had to ask.",
+        "After a network outage, modems with failing power supplies can struggle to come back cleanly, and those customers stay down after everyone else has recovered. I built a detection that combines several access-network and modem parameters to identify a faulty power supply. We emailed the customer an alert and shipped them a new one, which is generally cheaper than sending a technician or a replacement modem.",
       before: {
         label: "Without detection",
-        summary: "customer finds the problem",
-        steps: ["Network outage", "Modem fails to recover", "Customer calls support", "Agent troubleshoots", "Technician visit", "Power supply replaced"],
+        summary: "costly technician visit or new modem",
+        steps: ["Network outage", "Modem fails to recover", "Customer calls support", "Agent troubleshoots", "Technician visit or modem swap", "Back online"],
       },
       after: {
         label: "With detection",
-        summary: "we find the problem",
-        steps: ["Network outage", "Access & modem parameters analyzed", "Faulty power supply detected", "New power supply shipped proactively", "Customer back online"],
+        summary: "a power supply in the mail",
+        steps: ["Network outage", "Access & modem parameters analyzed", "Faulty power supply detected", "Customer emailed an alert", "New power supply shipped", "Back online"],
       },
-      outcome: "~$20K/month in savings and a better experience after outages: customers with failing power supplies got a new one proactively instead of discovering the problem themselves.",
+      outcome: "~$20K/month in savings, because shipping a power supply is generally cheaper than a technician visit or a new modem. Customers also got a better experience after outages: an email explaining the problem and a fix in the mail, instead of discovering it themselves.",
       caption: "Simplified flow for illustration.",
     },
     pipeline: {
