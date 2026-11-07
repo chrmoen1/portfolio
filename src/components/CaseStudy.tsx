@@ -98,9 +98,16 @@ export default function CaseStudy({ study }: { study: Study }) {
       </header>
 
       {/* Demo video */}
-      {(study.video || (DEV && study.placeholders?.video)) && (
+      {(study.video || study.hero || (DEV && study.placeholders?.video)) && (
       <div className="mt-14">
-        {study.video ? (
+        {study.hero && !study.video ? (
+          <figure>
+            <BrowserFrame label={host}>
+              <img src={study.hero.src} alt={study.hero.alt} className="w-full" />
+            </BrowserFrame>
+            {study.hero.caption && <figcaption className="mt-3 text-center text-sm text-slate-400">{study.hero.caption}</figcaption>}
+          </figure>
+        ) : study.video ? (
           <BrowserFrame label={host}>
             <video src={study.video.src} poster={study.video.poster} controls playsInline preload="metadata" className="aspect-video w-full bg-black" />
           </BrowserFrame>
@@ -434,10 +441,10 @@ export default function CaseStudy({ study }: { study: Study }) {
       {/* Screenshots */}
       {(study.screenshots?.length || (DEV && study.placeholders?.screenshots)) && (
         <Section title="Inside the product" sub={study.placeholders?.screenshotsSub}>
-          <div className="grid gap-6 md:grid-cols-2">
+          <div className={`grid items-start gap-6 md:grid-cols-2 ${study.screenshots?.length === 3 ? "xl:grid-cols-3" : ""}`}>
             {study.screenshots?.length
               ? study.screenshots.map((s) => (
-                  <figure key={s.src}>
+                  <figure key={s.src} className="reveal">
                     <BrowserFrame label={host}>
                       <img src={s.src} alt={s.caption} loading="lazy" className="w-full" />
                     </BrowserFrame>

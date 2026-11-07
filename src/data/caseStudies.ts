@@ -13,6 +13,8 @@ export type CaseStudy = {
   stack: string[];
   links: { label: string; href: string }[];
   video?: { src: string; poster?: string };
+  // Large lead screenshot shown in place of a video
+  hero?: { src: string; alt: string; caption?: string };
   overview: { title: string; body: string }[];
   intelligence?: {
     intro: string;
@@ -103,7 +105,11 @@ export const caseStudies: CaseStudy[] = [
       { label: "Visit pipemotion.com", href: "https://pipemotion.com" },
       // { label: "Book a demo", href: "https://calendly.com/..." }, // TODO: add your booking link
     ],
-    // video: { src: "/pipemotion/demo.mp4", poster: "/pipemotion/poster.jpg" },
+    hero: {
+      src: "/pipemotion/client-profile.webp",
+      alt: "pipeMOTION client profile showing responsiveness, intent, and timeline scores",
+      caption: "A context-aware client profile: responsiveness, intent, and buying timeline at a glance.",
+    },
     overview: [
       {
         title: "The problem",
@@ -280,14 +286,14 @@ export const caseStudies: CaseStudy[] = [
     //   { value: "—", label: "Emails handled by AI" },
     //   { value: "—", label: "Hours saved per broker / week" },
     // ],
-    // screenshots: [
-    //   { src: "/pipemotion/dashboard.png", caption: "Client pipeline dashboard" },
-    // ],
+    screenshots: [
+      { src: "/pipemotion/ai-drafts.webp", caption: "AI-drafted follow-ups waiting for the broker's approval" },
+      { src: "/pipemotion/activated-clients.webp", caption: "Activated clients, prioritized by intent and timeline" },
+      { src: "/pipemotion/automation.webp", caption: "Automation settings and usage" },
+    ],
     placeholders: {
-      video: "Demo video, 60–90s, from demo_video/revision_2",
       results: ["Brokers onboarded", "Emails handled by AI", "Hours saved / week", "Response time"],
-      screenshots: ["Client pipeline / dashboard", "AI-drafted reply review", "Tasks & reminders", "Inbox connection & onboarding"],
-      screenshotsSub: "Screens captured with synthetic demo data.",
+      screenshotsSub: "Captured from a development environment; contact details masked.",
     },
     cta: {
       title: "Want to see it live?",
