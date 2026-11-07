@@ -41,7 +41,7 @@ export default function Experience() {
         </ol>
 
         <div className="lg:order-2 lg:pt-6">
-          <Heading sub="Seven-plus years across startups and one of Canada's largest telecoms, shipping systems that millions of people rely on.">
+          <Heading sub="Eight-plus years across startups and one of Canada's largest telecoms, shipping systems that millions of people rely on.">
             My Experience
           </Heading>
           <div className="reveal mt-10 space-y-5">

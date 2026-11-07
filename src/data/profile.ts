@@ -170,7 +170,7 @@ export const services = [
 ] as const;
 
 export const stats = [
-  { value: "7+", label: "Years of experience" },
+  { value: "8+", label: "Years of experience" },
   { value: "1.5M+", label: "Users served" },
   { value: "$735K+", label: "Daily cost savings delivered" },
   { value: "99%", label: "Service reliability" },
