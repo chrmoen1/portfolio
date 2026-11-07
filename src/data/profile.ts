@@ -64,6 +64,7 @@ export const experience: Job[] = [
     period: "Mar 2022 — Jul 2025",
     highlights: [
       "Designed and shipped networking solutions for 1.5M users across 3 modem brands.",
+      "Deployed SQL scripts and built automated detection systems with Ansible, Bash, and Python to surface and diagnose access-network issues across the modem fleet.",
       "Led an IPTV performance initiative that cut $735K+ in daily maintenance costs.",
       "Resolved major Giga Hub issues, improving QoS by 10% and reaching 99% service reliability.",
     ],
