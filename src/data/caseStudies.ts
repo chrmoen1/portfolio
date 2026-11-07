@@ -635,7 +635,7 @@ deploy-openstack:
       {
         title: "Signal versus noise",
         problem: "Home-network data is noisy. Flag too much and nobody trusts it; flag too little and real problems slip through.",
-        approach: "Paired spike detection with multiple confirming conditions, so an issue is only flagged when the evidence points the same way.",
+        approach: "Paired spike detection with multiple confirming conditions, so an issue is only flagged when the evidence points the same way. We partnered with technicians and agents on live cases to get feedback on outcomes, and used those results to refine thresholds and conditions.",
       },
       {
         title: "Making data useful on a live call",
