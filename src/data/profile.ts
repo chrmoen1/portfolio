@@ -77,6 +77,8 @@ export const experience: Job[] = [
     location: "Ottawa, ON",
     highlights: [
       "Coordinated hundreds of deployments to 1.5M+ users, including Crave and Amazon Prime integrations and firmware upgrades.",
+      "Deployed .NET solutions delivering IPTV services on Windows-based OpenStack infrastructure.",
+      "Built automated deployment solutions with Octopus Deploy for consistent, repeatable releases.",
       "Built and maintained CI/CD pipelines, cutting deployment time by 20%.",
       "Built Kibana/PowerShell monitoring that kept services at 99% availability.",
     ],
@@ -144,8 +146,8 @@ export const projects: Project[] = [
 export const skills: { group: string; items: string[] }[] = [
   { group: "Languages", items: ["TypeScript", "JavaScript", "Python", "SQL", "Bash", "PowerShell"] },
   { group: "Frontend", items: ["React", "Tailwind CSS", "Vite"] },
-  { group: "Backend & Data", items: ["Node.js", "GraphQL", "MongoDB", "REST APIs", "Machine Learning"] },
-  { group: "DevOps", items: ["Linux", "Ansible", "CI/CD", "Kibana", "Docker", "OpenStack"] },
+  { group: "Backend & Data", items: ["Node.js", "GraphQL", ".NET", "MongoDB", "REST APIs", "Machine Learning"] },
+  { group: "DevOps", items: ["Linux", "Windows Server", "Ansible", "Octopus Deploy", "CI/CD", "Kibana", "Docker", "OpenStack"] },
 ];
 
 // Self-assessed proficiency (0–100) for skill bars. Adjust to taste.
