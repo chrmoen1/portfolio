@@ -1,6 +1,7 @@
 import { Fragment, useEffect, type ReactNode } from "react";
 import type { CaseStudy as Study } from "../data/caseStudies";
-import { BeforeAfter, FlowArrow, SystemFlow } from "./flows";
+import CodeTabs from "./CodeTabs";
+import { BeforeAfter, FlowArrow, LinearFlow, SystemFlow } from "./flows";
 import { Heading } from "./ui";
 
 const DEV = import.meta.env.DEV;
@@ -373,6 +374,25 @@ export default function CaseStudy({ study }: { study: Study }) {
           {study.pipeline.note}
         </p>
       </Section>
+
+      {/* Technical deep dive */}
+      {study.engineering && (
+        <Section title={study.engineering.title} sub={study.engineering.intro}>
+          <h3 className="reveal mb-4 text-lg text-slate-300">Deployment pipeline</h3>
+          <LinearFlow steps={study.engineering.deploy} />
+          <div className="mt-10 grid gap-8 lg:grid-cols-[1fr_1.15fr] lg:items-start">
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+              {study.engineering.components.map((c) => (
+                <div key={c.title} className="reveal glass rounded-xl p-5">
+                  <h4 className="font-semibold text-white">{c.title}</h4>
+                  <p className="mt-2 text-sm leading-relaxed text-slate-400">{c.body}</p>
+                </div>
+              ))}
+            </div>
+            {study.engineering.code && <CodeTabs files={study.engineering.code.files} caption={study.engineering.code.caption} />}
+          </div>
+        </Section>
+      )}
 
       {/* Challenges */}
       <Section title="Engineering challenges">

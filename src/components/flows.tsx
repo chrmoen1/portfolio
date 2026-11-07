@@ -13,7 +13,7 @@ export function FlowArrow({ vertical = false, className = "" }: { vertical?: boo
 }
 
 /** Arrow that is vertical on small screens and horizontal from `lg` up. */
-function ResponsiveArrow() {
+export function ResponsiveArrow() {
   return (
     <>
       <FlowArrow vertical className="flex-col lg:hidden" />
@@ -94,5 +94,23 @@ export function BeforeAfter({ before, after }: { before: Lane; after: Lane }) {
         );
       })}
     </div>
+  );
+}
+
+/** Single left-to-right flow of labelled steps (e.g. a CI/CD pipeline). */
+export function LinearFlow({ steps }: { steps: { name: string; detail: string; tag?: string }[] }) {
+  return (
+    <ol className="reveal glass flex flex-col items-stretch rounded-2xl p-5 sm:p-7 lg:flex-row lg:items-stretch">
+      {steps.map((s, i) => (
+        <Fragment key={s.name}>
+          {i > 0 && <ResponsiveArrow />}
+          <li className="flex flex-1 flex-col rounded-xl border border-white/10 bg-night/50 p-4">
+            {s.tag && <span className="mb-2 w-fit rounded bg-sky/15 px-2 py-0.5 font-mono text-[11px] text-sky">{s.tag}</span>}
+            <p className="font-semibold text-white">{s.name}</p>
+            <p className="mt-1 text-sm leading-relaxed text-slate-400">{s.detail}</p>
+          </li>
+        </Fragment>
+      ))}
+    </ol>
   );
 }

@@ -55,6 +55,14 @@ export type CaseStudy = {
     stages: { name: string; detail: string }[];
     note: string;
   };
+  // Technical deep dive: deployment pipeline, components, and an illustrative snippet
+  engineering?: {
+    title: string;
+    intro: string;
+    deploy: { name: string; detail: string; tag?: string }[];
+    components: { title: string; body: string }[];
+    code?: { caption: string; files: { name: string; lang: string; code: string }[] };
+  };
   challenges: { title: string; problem: string; approach: string }[];
   results?: { value: string; label: string }[];
   screenshots?: { src: string; caption: string }[];
@@ -298,7 +306,7 @@ export const caseStudies: CaseStudy[] = [
       { label: "Timeline", value: "Jul 2025 — Aug 2026" },
       { label: "Scope", value: "Detection logic, data pipelines, integrations" },
     ],
-    stack: ["SQL", "Python", "OpenStack", "Linux", "Bash", "Ansible", "Anomaly detection", "Data analysis"],
+    stack: ["SQL", "Python", "GitLab CI/CD", "OpenStack", "Linux", "Bash", "Ansible", "Anomaly detection"],
     links: [], // internal platform: no public link
     overview: [
       {
@@ -417,13 +425,114 @@ export const caseStudies: CaseStudy[] = [
       intro:
         "The hard part was scale: the data lived across hundreds of segmented tables. I built services on OpenStack that read it in with SQL, looked for spikes and the combinations of conditions that point to a specific issue, and pushed the results into the tools frontline teams already use.",
       stages: [
-        { name: "Read", detail: "Pull data segmented across hundreds of SQL tables into one view of each home." },
-        { name: "Process", detail: "Detection services running on OpenStack crunch the data at scale." },
-        { name: "Spot spikes", detail: "Flag abnormal jumps in key network and Wi-Fi metrics." },
-        { name: "Pinpoint", detail: "Match combinations of conditions that point to a specific issue." },
-        { name: "Upload", detail: "Send results to frontline tools for root-cause analysis on the spot." },
+        { name: "Read", detail: "A Python wrapper runs parameterized SQL across hundreds of segmented tables and joins the results into one view per home." },
+        { name: "Process", detail: "Detection jobs run as Python services on OpenStack, deployed through GitLab CI/CD." },
+        { name: "Spot spikes", detail: "SQL aggregations surface abnormal jumps in key access, modem, and Wi-Fi metrics." },
+        { name: "Pinpoint", detail: "Rule logic requires several conditions to agree before a home is flagged with a specific issue." },
+        { name: "Upload", detail: "Flagged homes and their root cause are pushed to frontline tools through an integration." },
       ],
       note: "Built to align technicians, agents, and data on one shared diagnosis.",
+    },
+    // TODO: confirm deploy/runtime details (e.g. scheduling, Ansible usage) match what you built
+    engineering: {
+      title: "Under the hood",
+      intro:
+        "Each detection is a SQL query plus a small piece of Python rule logic. A shared Python wrapper handles connections, runs queries across the segmented tables, evaluates rules, and publishes results. GitLab CI/CD tests and ships every change to the OpenStack hosts that run it.",
+      deploy: [
+        { name: "Commit", tag: "git push", detail: "New or updated detection: SQL file + Python rule." },
+        { name: "Validate", tag: "GitLab CI", detail: "Lint Python, check SQL, run unit tests against sample data." },
+        { name: "Deploy", tag: "GitLab CD", detail: "Ship the detection service to OpenStack hosts." },
+        { name: "Run", tag: "OpenStack", detail: "Python wrapper executes SQL across hundreds of tables." },
+        { name: "Publish", tag: "integration", detail: "Results uploaded to frontline tools for agents & techs." },
+      ],
+      components: [
+        {
+          title: "Python detection wrapper",
+          body: "One framework for every detection: manages database connections, runs parameterized SQL over the segmented tables, applies spike and condition rules, and formats results for upload.",
+        },
+        {
+          title: "SQL detection library",
+          body: "Each issue (low RSSI, poor performance, bad Wi-Fi, power supply) is its own versioned SQL query, so detections can be added or tuned without touching the framework.",
+        },
+        {
+          title: "GitLab CI/CD",
+          body: "Every change is linted and tested in GitLab before an automated deploy to OpenStack, so new detections ship quickly and safely.",
+        },
+        {
+          title: "OpenStack runtime",
+          body: "Detection services run on OpenStack, close to the data, with Linux, Bash, and Ansible tooling for operations.",
+        },
+        {
+          title: "Frontline integration",
+          body: "Results are uploaded into the tools agents and technicians already use, so the root cause shows up where the work happens.",
+        },
+      ],
+      code: {
+        caption: "Illustrative, simplified example of the wrapper pattern with made-up table and column names. Not production code.",
+        files: [
+          {
+            name: "detections/power_supply.py",
+            lang: "python",
+            code: `from detection import Detection, register
+
+@register
+class FaultyPowerSupply(Detection):
+    """Flag homes whose access + modem parameters point to a failing PSU."""
+    name = "faulty_power_supply"
+    sql = "sql/power_supply.sql"
+
+    def is_issue(self, row) -> bool:
+        # Several independent signals must agree before we act
+        conditions = [
+            row.reboot_spike,
+            row.power_events_after_outage,
+            row.line_ok_but_modem_unstable,
+        ]
+        return sum(conditions) >= 2
+
+    def action(self, row):
+        return {"home_id": row.home_id, "root_cause": "power_supply",
+                "next_step": "email_alert_and_ship_psu"}`,
+          },
+          {
+            name: "sql/power_supply.sql",
+            lang: "sql",
+            code: `-- Simplified: combine signals from segmented tables for one window
+SELECT h.home_id,
+       r.reboots_24h > 3 * r.reboots_baseline          AS reboot_spike,
+       p.power_events_post_outage > 0                  AS power_events_after_outage,
+       (a.line_status = 'OK' AND m.uptime_min < 30)    AS line_ok_but_modem_unstable
+FROM homes h
+JOIN modem_reboots   r ON r.home_id = h.home_id
+JOIN power_events    p ON p.home_id = h.home_id
+JOIN access_metrics  a ON a.home_id = h.home_id
+JOIN modem_metrics   m ON m.home_id = h.home_id
+WHERE r.window_start >= :window_start;`,
+          },
+          {
+            name: ".gitlab-ci.yml",
+            lang: "yaml",
+            code: `stages: [validate, test, deploy]
+
+lint:
+  stage: validate
+  script:
+    - ruff check .
+    - sqlfluff lint sql/
+
+unit-tests:
+  stage: test
+  script:
+    - pytest tests/ --sample-data fixtures/
+
+deploy-openstack:
+  stage: deploy
+  only: [main]
+  script:
+    - ./deploy.sh --target openstack   # ships the detection service`,
+          },
+        ],
+      },
     },
     // TODO: review — these describe typical challenges; adjust to what you actually faced
     challenges: [
