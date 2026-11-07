@@ -15,6 +15,8 @@ export type CaseStudy = {
   video?: { src: string; poster?: string };
   // Large lead screenshot shown in place of a video
   hero?: { src: string; alt: string; caption?: string };
+  // Interactive screen viewer (tabs, arrows, click to enlarge) shown at the top
+  gallery?: { title: string; src: string; thumb?: string; alt: string; caption?: string }[];
   overview: { title: string; body: string }[];
   intelligence?: {
     intro: string;
@@ -105,11 +107,36 @@ export const caseStudies: CaseStudy[] = [
       { label: "Visit pipemotion.com", href: "https://pipemotion.com" },
       // { label: "Book a demo", href: "https://calendly.com/..." }, // TODO: add your booking link
     ],
-    hero: {
-      src: "/pipemotion/client-profile.webp",
-      alt: "pipeMOTION client profile showing responsiveness, intent, and timeline scores",
-      caption: "A context-aware client profile: responsiveness, intent, and buying timeline at a glance.",
-    },
+    gallery: [
+      {
+        title: "Client profile",
+        src: "/pipemotion/client-profile.webp",
+        thumb: "/pipemotion/client-profile-thumb.webp",
+        alt: "pipeMOTION client profile showing responsiveness, intent, and timeline scores",
+        caption: "A context-aware client profile: responsiveness, intent, and buying timeline at a glance.",
+      },
+      {
+        title: "AI-drafted follow-ups",
+        src: "/pipemotion/ai-drafts.webp",
+        thumb: "/pipemotion/ai-drafts-thumb.webp",
+        alt: "Two AI-drafted follow-up emails awaiting approval, with Send Now and Schedule for Later buttons",
+        caption: "Follow-ups drafted by the AI pipeline, waiting for the broker to send or schedule.",
+      },
+      {
+        title: "Activated clients",
+        src: "/pipemotion/activated-clients.webp",
+        thumb: "/pipemotion/activated-clients-thumb.webp",
+        alt: "Activated clients list filtered by deal stage",
+        caption: "Activated clients, filterable by deal type and prioritized by intent and timeline.",
+      },
+      {
+        title: "Automation & credits",
+        src: "/pipemotion/automation.webp",
+        thumb: "/pipemotion/automation-thumb.webp",
+        alt: "Automation and credits dashboard with usage and automation toggles",
+        caption: "Automation controls and usage, so brokers decide exactly what runs on their behalf.",
+      },
+    ],
     overview: [
       {
         title: "The problem",
@@ -286,14 +313,8 @@ export const caseStudies: CaseStudy[] = [
     //   { value: "—", label: "Emails handled by AI" },
     //   { value: "—", label: "Hours saved per broker / week" },
     // ],
-    screenshots: [
-      { src: "/pipemotion/ai-drafts.webp", caption: "AI-drafted follow-ups waiting for the broker's approval" },
-      { src: "/pipemotion/activated-clients.webp", caption: "Activated clients, prioritized by intent and timeline" },
-      { src: "/pipemotion/automation.webp", caption: "Automation settings and usage" },
-    ],
     placeholders: {
       results: ["Brokers onboarded", "Emails handled by AI", "Hours saved / week", "Response time"],
-      screenshotsSub: "Captured from a development environment; contact details masked.",
     },
     cta: {
       title: "Want to see it live?",

@@ -1,6 +1,7 @@
 import { Fragment, useEffect, type ReactNode } from "react";
 import type { CaseStudy as Study } from "../data/caseStudies";
 import CodeTabs from "./CodeTabs";
+import ScreenViewer from "./ScreenViewer";
 import { BeforeAfter, FlowArrow, LinearFlow, SystemFlow } from "./flows";
 import { Heading } from "./ui";
 
@@ -97,8 +98,16 @@ export default function CaseStudy({ study }: { study: Study }) {
         </dl>
       </header>
 
+      {/* Interactive screens */}
+      {study.gallery && study.gallery.length > 0 && (
+        <div className="mt-14">
+          <ScreenViewer screens={study.gallery} host={host} />
+          <p className="mt-2 text-center text-xs text-slate-500">Captured from a development environment; contact details masked.</p>
+        </div>
+      )}
+
       {/* Demo video */}
-      {(study.video || study.hero || (DEV && study.placeholders?.video)) && (
+      {!study.gallery && (study.video || study.hero || (DEV && study.placeholders?.video)) && (
       <div className="mt-14">
         {study.hero && !study.video ? (
           <figure>

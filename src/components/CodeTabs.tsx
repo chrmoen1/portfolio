@@ -9,7 +9,7 @@ export default function CodeTabs({ files, caption }: { files: File[]; caption?: 
   return (
     <figure className="reveal min-w-0">
       <div className="glass overflow-hidden rounded-2xl">
-        <div className="flex items-center gap-1 overflow-x-auto border-b border-white/10 px-3 pt-3" role="tablist">
+        <div className="no-scrollbar flex items-center gap-1 overflow-x-auto border-b border-white/10 px-3 pt-3" role="tablist">
           {files.map((f, i) => (
             <button
               key={f.name}
