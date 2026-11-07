@@ -298,7 +298,7 @@ export const caseStudies: CaseStudy[] = [
       { label: "Timeline", value: "Jul 2025 — Aug 2026" },
       { label: "Scope", value: "Detection logic, data pipelines, integrations" },
     ],
-    stack: ["SQL", "Python", "Linux", "Bash", "Ansible", "Anomaly detection", "Data analysis"],
+    stack: ["SQL", "Python", "OpenStack", "Linux", "Bash", "Ansible", "Anomaly detection", "Data analysis"],
     links: [], // internal platform: no public link
     overview: [
       {
@@ -311,7 +311,7 @@ export const caseStudies: CaseStudy[] = [
       },
       {
         title: "My role",
-        body: "I designed and built the SQL detection logic and the pipelines behind it, and built the integration that delivers root-cause results to technicians and front-line agents in the tools they already use.",
+        body: "I built the detection end to end: services on OpenStack that read data segmented across hundreds of SQL tables, logic that finds spikes and the conditions that pinpoint an issue, and the integration that uploads root-cause results to the frontline tools technicians and agents already use.",
       },
     ],
     // TODO: confirm these examples match what the platform actually detected and recommended
@@ -360,13 +360,14 @@ export const caseStudies: CaseStudy[] = [
         {
           name: "Data in",
           nodes: [
-            { title: "Home network data", detail: "Gateway & Wi-Fi telemetry" },
+            { title: "Hundreds of SQL tables", detail: "Segmented network data" },
+            { title: "Gateway & Wi-Fi telemetry", detail: "Signal, devices, Wi-Fi" },
             { title: "Service performance", detail: "Speed, latency, stability" },
             { title: "Outage events", detail: "Network outages & recovery" },
           ],
         },
         {
-          name: "SQL detection engine",
+          name: "Detection services · OpenStack",
           nodes: [
             { title: "Low RSSI", detail: "Weak Wi-Fi signal" },
             { title: "Poor network performance", detail: "Below expected service" },
@@ -375,15 +376,17 @@ export const caseStudies: CaseStudy[] = [
           ],
         },
         {
-          name: "Root cause",
+          name: "Analysis",
           nodes: [
-            { title: "Root-cause analysis", detail: "Maps each detection to a likely cause" },
-            { title: "Recommended action", detail: "Plain-language next step" },
+            { title: "Spike detection", detail: "Abnormal jumps in key metrics" },
+            { title: "Condition matching", detail: "Combined signals pinpoint the issue" },
+            { title: "Root cause", detail: "Likely cause + recommended action" },
           ],
         },
         {
           name: "Action",
           nodes: [
+            { title: "Frontline tools", detail: "Results uploaded for agents & techs" },
             { title: "Front-line agents", detail: "Root cause during the call" },
             { title: "Field technicians", detail: "Diagnosis before the visit" },
             { title: "Proactive replacement", detail: "New power supply shipped" },
@@ -410,14 +413,15 @@ export const caseStudies: CaseStudy[] = [
       caption: "Simplified flow for illustration.",
     },
     pipeline: {
-      title: "From data to fix",
-      intro: "Every home moves through the same flow, so root causes reach the right person while the customer still needs help.",
+      title: "How the detection was built",
+      intro:
+        "The hard part was scale: the data lived across hundreds of segmented tables. I built services on OpenStack that read it in with SQL, looked for spikes and the combinations of conditions that point to a specific issue, and pushed the results into the tools frontline teams already use.",
       stages: [
-        { name: "Ingest", detail: "Read in home-network and performance data." },
-        { name: "Detect", detail: "SQL rules flag known issue patterns." },
-        { name: "Diagnose", detail: "Each detection is mapped to its likely root cause." },
-        { name: "Deliver", detail: "Results reach technicians and front-line agents." },
-        { name: "Resolve", detail: "Fixed first time, with fewer repeat calls and visits." },
+        { name: "Read", detail: "Pull data segmented across hundreds of SQL tables into one view of each home." },
+        { name: "Process", detail: "Detection services running on OpenStack crunch the data at scale." },
+        { name: "Spot spikes", detail: "Flag abnormal jumps in key network and Wi-Fi metrics." },
+        { name: "Pinpoint", detail: "Match combinations of conditions that point to a specific issue." },
+        { name: "Upload", detail: "Send results to frontline tools for root-cause analysis on the spot." },
       ],
       note: "Built to align technicians, agents, and data on one shared diagnosis.",
     },
@@ -426,7 +430,7 @@ export const caseStudies: CaseStudy[] = [
       {
         title: "Signal versus noise",
         problem: "Home-network data is noisy. Flag too much and nobody trusts it; flag too little and real problems slip through.",
-        approach: "Tuned detection thresholds against real outcomes so alerts stay trustworthy and actionable.",
+        approach: "Paired spike detection with multiple confirming conditions, so an issue is only flagged when the evidence points the same way.",
       },
       {
         title: "Making data useful on a live call",

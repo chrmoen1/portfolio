@@ -131,7 +131,7 @@ export const projects: Project[] = [
     category: "Data",
     description:
       "SQL detection platform at Bell that diagnoses low signal, poor performance, and bad Wi-Fi, and delivers root causes to technicians and front-line agents.",
-    tags: ["SQL", "Python", "Anomaly Detection"],
+    tags: ["SQL", "Python", "OpenStack", "Anomaly Detection"],
     caseStudy: "bell-root-cause",
   },
   {
