@@ -13,6 +13,12 @@ export type CaseStudy = {
   links: { label: string; href: string }[];
   video?: { src: string; poster?: string };
   overview: { title: string; body: string }[];
+  intelligence: {
+    intro: string;
+    features: { title: string; body: string }[];
+    // Illustrative client card (fictional person) shown beside the features
+    example: { name: string; intent: string; timeline: string; facts: string[]; next: string };
+  };
   architecture: {
     intro: string;
     layers: { name: string; nodes: { title: string; detail: string }[] }[];
@@ -32,7 +38,7 @@ export const caseStudies: CaseStudy[] = [
     slug: "pipemotion",
     title: "pipeMOTION",
     tagline:
-      "An AI-powered CRM that helps real estate and mortgage brokers manage client relationships, automate follow-up, and act on sales opportunities.",
+      "An AI-powered CRM that builds a living, context-aware profile of every client, so real estate and mortgage brokers always know who to follow up with, when, and what to say.",
     meta: [
       { label: "Role", value: "Co-Founder & CTO" },
       { label: "Scope", value: "Architecture, full-stack, AI, infrastructure" },
@@ -65,13 +71,50 @@ export const caseStudies: CaseStudy[] = [
       },
       {
         title: "The solution",
-        body: "pipeMOTION connects to a broker's inbox, understands each client conversation, and drafts, schedules, and tracks follow-ups automatically, keeping the broker in control of anything sent on their behalf.",
+        body: "pipeMOTION connects to a broker's inbox and turns every conversation into client context: intent, timeline, relationships, and key dates. It uses that context to prioritize clients and to draft, schedule, and track follow-ups, keeping the broker in control of anything sent on their behalf.",
       },
       {
         title: "My role",
         body: "As co-founder and CTO I designed the system architecture and built the platform end to end: the Next.js app, the GraphQL API, the multi-agent AI pipeline, billing, analytics, testing, and cloud deployment.",
       },
     ],
+    intelligence: {
+      intro:
+        "Deals stall when context lives in a broker's head. pipeMOTION keeps an always-current picture of every client and uses it to decide who needs attention next, raising deal throughput without adding work.",
+      features: [
+        {
+          title: "Living client profiles",
+          body: "An AI-built profile for each client that refreshes whenever they send something new, so context never goes stale and stays cheap to maintain.",
+        },
+        {
+          title: "Timeline & intent detection",
+          body: "Reads phrases like \"we're hoping to move in a couple of months\" against the message date, turns them into a target date, and scores intent as it gets closer.",
+        },
+        {
+          title: "Relationship mapping",
+          body: "Links spouses, family groups, and referrals with a primary contact, so a household is treated as one opportunity instead of scattered contacts.",
+        },
+        {
+          title: "Key dates & occasions",
+          body: "Picks up birthdays and milestones from conversations and turns them into timely touchpoints that keep relationships warm between deals.",
+        },
+        {
+          title: "Follow-up that adapts",
+          body: "Cadences pause when a client replies, re-anchor after real conversations, and escalate to the broker when a thread needs a human.",
+        },
+        {
+          title: "Clean, trusted contacts",
+          body: "AI separates real clients from newsletters and noise, flags unsure contacts for review, and never overrides a broker's own decision.",
+        },
+      ],
+      example: {
+        name: "Sarah T.",
+        intent: "High",
+        timeline: "1–3 months",
+        facts: ["Pre-approved, first-time buyer", "Household: Sarah + Mark (spouse)", "Birthday: Mar 15", "Prefers email, replies evenings"],
+        next: "Send three new listings in her area before Friday",
+      },
+    },
     architecture: {
       intro:
         "A typed Next.js frontend talks to a single GraphQL API. The API owns business logic and orchestrates AI agents, inbox integrations, billing, and background jobs.",

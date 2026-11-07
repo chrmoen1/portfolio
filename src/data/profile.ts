@@ -48,6 +48,7 @@ export const experience: Job[] = [
     role: "Senior Data Scientist",
     period: "Jul 2025 — Aug 2026",
     highlights: [
+      "Built an integration system connecting field technicians and support agents with automated home-network root-cause detection, saving ~$20K/month.",
       "Built SQL-based anomaly-detection and analytics pipelines to catch production issues across large-scale systems.",
       "Wrote diagnostic and automation tooling (Python, Bash, Ansible) for root-cause analysis, API health monitoring, and service recovery.",
     ],

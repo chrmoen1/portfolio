@@ -136,6 +136,58 @@ export default function CaseStudy({ study }: { study: Study }) {
         </div>
       </Section>
 
+      {/* Client intelligence */}
+      <Section title="Context-aware clients" sub={study.intelligence.intro}>
+        <div className="grid gap-8 lg:grid-cols-[1.5fr_1fr] lg:items-start">
+          <div className="grid gap-4 sm:grid-cols-2">
+            {study.intelligence.features.map((f, i) => (
+              <div key={f.title} className="reveal glass rounded-xl p-6" style={{ transitionDelay: `${(i % 2) * 80}ms` }}>
+                <h3 className="text-lg">{f.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-slate-400">{f.body}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Illustrative client card */}
+          <figure className="reveal lg:sticky lg:top-28">
+            <div className="glass rounded-2xl p-6 shadow-2xl shadow-violet/10">
+              <div className="flex items-center gap-4">
+                <span className="grid size-12 place-items-center rounded-full bg-gradient-to-br from-cyan to-violet font-bold text-night">
+                  {study.intelligence.example.name.split(" ").map((n) => n[0]).join("")}
+                </span>
+                <div>
+                  <p className="font-semibold text-white">{study.intelligence.example.name}</p>
+                  <p className="text-xs text-slate-400">Client profile · updated from latest email</p>
+                </div>
+              </div>
+              <div className="mt-5 grid grid-cols-2 gap-3">
+                <div className="rounded-lg bg-mint/10 px-3 py-2">
+                  <p className="text-[11px] font-semibold tracking-wider text-mint uppercase">Intent</p>
+                  <p className="font-semibold text-white">{study.intelligence.example.intent}</p>
+                </div>
+                <div className="rounded-lg bg-sky/10 px-3 py-2">
+                  <p className="text-[11px] font-semibold tracking-wider text-sky uppercase">Timeline</p>
+                  <p className="font-semibold text-white">{study.intelligence.example.timeline}</p>
+                </div>
+              </div>
+              <ul className="mt-4 space-y-2 text-sm text-slate-300">
+                {study.intelligence.example.facts.map((f) => (
+                  <li key={f} className="flex gap-2">
+                    <span className="text-cyan">•</span>
+                    {f}
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-5 rounded-lg border border-violet/40 bg-violet/10 p-3">
+                <p className="text-[11px] font-semibold tracking-wider text-violet uppercase">Suggested next step</p>
+                <p className="mt-1 text-sm font-medium text-white">{study.intelligence.example.next}</p>
+              </div>
+            </div>
+            <figcaption className="mt-3 text-center text-xs text-slate-500">Illustrative example with a fictional client</figcaption>
+          </figure>
+        </div>
+      </Section>
+
       {/* Architecture */}
       <Section title="Architecture" sub={study.architecture.intro}>
         <div className="reveal glass rounded-2xl p-5 sm:p-8">
