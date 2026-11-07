@@ -51,6 +51,11 @@ export default function Projects() {
                   <h3 className="mt-2 text-xl">{p.title}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-slate-400">{p.description}</p>
                   <div className="mt-4 flex gap-4 text-sm font-semibold">
+                    {p.caseStudy && (
+                      <a href={`#/work/${p.caseStudy}`} className="rounded-md bg-sky px-3 py-1 text-white transition hover:brightness-110">
+                        Case study →
+                      </a>
+                    )}
                     {p.href && (
                       <a href={p.href} target="_blank" rel="noreferrer" className="text-cyan hover:underline">
                         Live ↗

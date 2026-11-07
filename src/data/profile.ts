@@ -102,6 +102,7 @@ export type Project = {
   tags: string[];
   href?: string;
   repo?: string;
+  caseStudy?: string; // slug in caseStudies.ts → opens #/work/<slug>
 };
 
 // TODO: replace these placeholders with your real projects.
@@ -112,7 +113,8 @@ export const projects: Project[] = [
     description:
       "AI-powered CRM for real estate and mortgage brokers: workflow automation, client communication, and opportunity detection.",
     tags: ["React", "GraphQL", "Node.js", "MongoDB", "AI"],
-    href: "#",
+    href: "https://pipemotion.com",
+    caseStudy: "pipemotion",
   },
   {
     title: "Anomaly Detection Pipeline",

@@ -10,6 +10,11 @@ export default function BackToTop() {
   return (
     <a
       href="#top"
+      onClick={(e) => {
+        // Scroll instead of navigating, so it also works on case-study pages
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }}
       aria-label="Back to top"
       className={`fixed right-6 bottom-6 z-40 grid size-12 place-items-center rounded-full bg-sky text-white shadow-lg shadow-sky/40 transition ${
         show ? "opacity-100" : "pointer-events-none translate-y-4 opacity-0"
