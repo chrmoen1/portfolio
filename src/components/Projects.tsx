@@ -14,7 +14,7 @@ export default function Projects() {
 
   return (
     <section id="projects" className="py-24">
-      <div className="mx-auto max-w-7xl px-4 sm:px-8">
+      <div className="mx-auto max-w-[96rem] px-4 sm:px-8 2xl:px-12">
         <h2 className="reveal text-center text-3xl sm:text-4xl">
           <span className="mr-4 inline-block h-0.5 w-14 bg-sky align-middle" />
           Latest Projects

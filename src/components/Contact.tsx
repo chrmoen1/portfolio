@@ -17,7 +17,7 @@ export default function Contact() {
 
   return (
     <section id="contact" className="py-24">
-      <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-8 lg:grid-cols-2">
+      <div className="mx-auto grid max-w-[96rem] gap-12 px-4 sm:px-8 2xl:px-12 lg:grid-cols-2">
         <div>
           <Heading sub="Have a project, a role, or a hard problem? I'd love to hear about it.">Get In Touch</Heading>
           <ul className="reveal mt-10 space-y-4">

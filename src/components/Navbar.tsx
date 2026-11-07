@@ -28,7 +28,7 @@ export default function Navbar() {
   return (
     <>
       <header className={`fixed inset-x-0 top-0 z-50 transition-colors ${scrolled ? "bg-night/80 backdrop-blur-md" : ""}`}>
-        <nav className="mx-auto flex h-18 max-w-7xl items-center justify-between px-4 sm:px-8">
+        <nav className="mx-auto flex h-18 max-w-[96rem] items-center justify-between px-4 sm:px-8 2xl:px-12">
           <a href="#top" className="flex items-center gap-2 text-xl font-bold text-white">
             <img src={profile.avatar} alt="" className="size-9 rounded-lg border-2 border-white bg-cyan object-cover" />
             Portfolio
@@ -51,7 +51,7 @@ export default function Navbar() {
           open ? "visible opacity-100" : "invisible opacity-0"
         }`}
       >
-        <div className="mx-auto flex h-18 w-full max-w-7xl items-center justify-end px-4 sm:px-8">
+        <div className="mx-auto flex h-18 w-full max-w-[96rem] items-center justify-end px-4 sm:px-8 2xl:px-12">
           <button onClick={() => setOpen(false)} aria-label="Close menu" className="grid size-11 place-items-center rounded-lg text-white hover:bg-white/10">
             <svg className="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M6 6l12 12M18 6 6 18" />

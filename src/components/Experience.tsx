@@ -7,7 +7,7 @@ export default function Experience() {
 
   return (
     <section id="experience" className="py-24">
-      <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-8 lg:grid-cols-[1.3fr_0.7fr]">
+      <div className="mx-auto grid max-w-[96rem] gap-12 px-4 sm:px-8 2xl:px-12 lg:grid-cols-[1.3fr_0.7fr]">
         <ol className="space-y-4 lg:order-1">
           {experience.map((job, i) => {
             const isOpen = open === i;

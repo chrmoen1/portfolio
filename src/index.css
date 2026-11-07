@@ -30,6 +30,10 @@
     scroll-behavior: smooth;
     scroll-padding-top: 5rem;
   }
+  /* Scale everything up on large monitors so the layout fills the screen */
+  @media (min-width: 1800px) { html { font-size: 17px; } }
+  @media (min-width: 2200px) { html { font-size: 19px; } }
+  @media (min-width: 2500px) { html { font-size: 20px; } }
   body {
     @apply bg-night font-sans text-slate-300 antialiased;
     overflow-x: clip;

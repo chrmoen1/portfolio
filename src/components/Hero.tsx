@@ -13,8 +13,8 @@ export default function Hero() {
       </svg>
       <span className="absolute top-28 left-[42%] size-4 rounded-full border-[3px] border-sun" />
 
-      <div className="relative mx-auto grid w-full max-w-7xl items-center gap-14 px-4 sm:px-8 lg:grid-cols-2">
-        <div className="relative mx-auto w-full max-w-md">
+      <div className="relative mx-auto grid w-full max-w-[96rem] items-center gap-14 px-4 sm:px-8 2xl:px-12 lg:grid-cols-2">
+        <div className="relative mx-auto w-full max-w-md 2xl:max-w-lg">
           <Portrait className="aspect-[4/5] w-full" />
           <Sparkle className="absolute -top-2 -right-6 size-12 animate-float text-white" />
           <DotGrid className="absolute top-1/3 -right-3 size-10 text-white/70" />
@@ -23,7 +23,7 @@ export default function Hero() {
 
         <div>
           <span className="inline-block rounded-full bg-violet px-4 py-1 text-sm font-semibold text-white">{profile.title}</span>
-          <h1 className="mt-5 text-5xl leading-tight sm:text-6xl">
+          <h1 className="mt-5 text-5xl leading-tight sm:text-6xl 2xl:text-7xl">
             Hello! <span className="inline-block origin-[70%_70%] animate-[wave_2.4s_ease-in-out_infinite]">👋</span> I Am
             <br />
             <span className="text-mint">

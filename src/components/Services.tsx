@@ -43,7 +43,7 @@ function Counter({ value }: { value: string }) {
 export default function Services() {
   return (
     <section id="services" className="py-24">
-      <div className="mx-auto max-w-7xl px-4 sm:px-8">
+      <div className="mx-auto max-w-[96rem] px-4 sm:px-8 2xl:px-12">
         <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
           <div>
             <Heading sub="End-to-end ownership, from system design to the dashboards that prove it works.">What I Do</Heading>

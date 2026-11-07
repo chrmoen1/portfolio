@@ -4,7 +4,7 @@ import { Button, Heading, Portrait } from "./ui";
 export default function About() {
   return (
     <section id="about" className="py-24">
-      <div className="mx-auto max-w-7xl px-4 sm:px-8">
+      <div className="mx-auto max-w-[96rem] px-4 sm:px-8 2xl:px-12">
         <div className="grid items-center gap-12 lg:grid-cols-[0.9fr_1.1fr]">
           <div className="reveal relative mx-auto w-full max-w-sm">
             <div className="absolute -top-5 -left-5 h-full w-full rounded-[2.5rem] border border-white/15" />
