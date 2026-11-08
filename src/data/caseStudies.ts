@@ -339,6 +339,7 @@ export const caseStudies: CaseStudy[] = [
         },
       ],
       guardrails: [
+        "Sensitive data redacted before AI calls and in logs",
         "Daily outbound send limits",
         "Allow-listed hosts for outbound requests",
         "Alerts on OAuth and AI provider failures",
@@ -366,7 +367,7 @@ export const caseStudies: CaseStudy[] = [
         title: "Letting AI touch real inboxes safely",
         problem: "An AI that emails a broker's clients can't be wrong in public. Mistakes cost trust and deals.",
         approach:
-          "Split the work into narrow agents with a dedicated QA stage, kept humans in control of every thread, and gated automated sends behind explicit rules.",
+          "Split the work into narrow agents with a dedicated QA stage, kept humans in control of every thread, and gated automated sends behind explicit rules. Sensitive details like card numbers, SINs, and credentials are redacted before any content reaches an AI model, and logs are scrubbed of tokens and secrets.",
       },
       {
         title: "Testing conversations that haven't happened yet",
