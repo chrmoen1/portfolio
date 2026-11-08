@@ -105,6 +105,7 @@ export const caseStudies: CaseStudy[] = [
       "Docker",
       "Paddle",
       "PostHog",
+      "Jest",
       "Playwright",
     ],
     links: [
@@ -371,7 +372,7 @@ export const caseStudies: CaseStudy[] = [
         title: "Testing conversations that haven't happened yet",
         problem: "Multi-turn email behaviour is hard to test with real data, and real client data can't be used for testing.",
         approach:
-          "Built a simulation harness that generates synthetic client and agent replies to replay whole threads end to end. It runs only outside production.",
+          "Built a simulation harness that generates synthetic client and agent replies to replay whole threads end to end. It runs only outside production. Behind it, a Jest suite of 500+ test files runs in the deploy pipeline with pre- and post-deploy checks, so a failing test blocks the release and every deploy is verified end to end.",
       },
       {
         title: "Shipping fast without breaking billing",
