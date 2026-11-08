@@ -45,6 +45,64 @@ function useTurnstile(container: React.RefObject<HTMLDivElement | null>) {
 
 type Status = { state: "idle" | "sending" | "sent" | "error"; error?: string };
 
+const EMAIL_SUBJECT = "Hello from your portfolio";
+/** Opens Gmail's web compose window with the address and subject filled in. */
+const gmailCompose = (to: string) =>
+  `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(to)}&su=${encodeURIComponent(EMAIL_SUBJECT)}`;
+const mailto = (to: string) => `mailto:${to}?subject=${encodeURIComponent(EMAIL_SUBJECT)}`;
+
+function EmailCard() {
+  const [copied, setCopied] = useState(false);
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(profile.email);
+    } catch {
+      // Clipboard API unavailable (e.g. insecure context): fall back to a hidden textarea
+      const t = document.createElement("textarea");
+      t.value = profile.email;
+      document.body.appendChild(t);
+      t.select();
+      document.execCommand("copy");
+      t.remove();
+    }
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  return (
+    <div className="reveal glass flex flex-col justify-center rounded-2xl p-7 sm:p-9">
+      <span className="grid size-14 place-items-center rounded-2xl bg-gradient-to-br from-cyan to-sky text-night">
+        <Icon name="mail" className="size-7" />
+      </span>
+      <h3 className="mt-6 text-2xl">Let's talk</h3>
+      <p className="mt-2 text-slate-400">The quickest way to reach me is email. I usually reply within a day or two.</p>
+      <p className="mt-6 text-lg font-semibold break-all text-white sm:text-xl">{profile.email}</p>
+      <div className="mt-6 flex flex-wrap gap-3">
+        <a
+          href={gmailCompose(profile.email)}
+          target="_blank"
+          rel="noreferrer"
+          className="inline-flex items-center gap-2 rounded-lg bg-sky px-6 py-3 font-semibold text-white shadow-lg shadow-sky/30 transition hover:brightness-110"
+        >
+          <Icon name="mail" className="size-5" />
+          Email me in Gmail
+        </a>
+        <button
+          type="button"
+          onClick={copy}
+          className="rounded-lg border border-white/15 px-5 py-3 font-semibold text-white transition hover:border-cyan"
+          aria-live="polite"
+        >
+          {copied ? "Copied ✓" : "Copy email"}
+        </button>
+      </div>
+      <a href={mailto(profile.email)} className="mt-4 w-fit text-sm text-slate-400 underline-offset-4 hover:text-cyan hover:underline">
+        Use another email app
+      </a>
+    </div>
+  );
+}
+
 export default function Contact() {
   const empty = { name: "", email: "", subject: "", message: "", website: "" };
   const [form, setForm] = useState(empty);
@@ -90,7 +148,7 @@ export default function Contact() {
           <Heading sub="Have a project, a role, or a hard problem? I'd love to hear about it.">Get In Touch</Heading>
           <ul className="reveal mt-10 space-y-4">
             {[
-              { icon: "mail", label: "Email", value: profile.email, href: `mailto:${profile.email}` },
+              { icon: "mail", label: "Email", value: profile.email, href: gmailCompose(profile.email) },
               { icon: "link", label: "LinkedIn", value: "chris-moen", href: profile.socials[0].href },
               { icon: "pin", label: "Location", value: profile.location },
             ].map((c) => (
@@ -123,6 +181,9 @@ export default function Contact() {
           </div>
         </div>
 
+        {!profile.contactForm ? (
+          <EmailCard />
+        ) : (
         <form onSubmit={submit} className="reveal glass space-y-4 rounded-2xl p-7" noValidate={false}>
           {status.state === "sent" && (
             <div className="grid min-h-80 place-items-center text-center">
@@ -173,6 +234,7 @@ export default function Contact() {
               </button>
           </div>
         </form>
+        )}
       </div>
     </section>
   );

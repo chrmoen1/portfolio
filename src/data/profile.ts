@@ -18,6 +18,9 @@ export const profile = {
   photo: "/me.webp" as string,
   avatar: "/me-avatar.webp" as string,
   email: "moenchris1@gmail.com",
+  // false = show an "email me" card (opens Gmail compose) instead of the contact form.
+  // The form + Cloudflare function (functions/api/contact.js) stay in the code for later.
+  contactForm: false as boolean,
   resumeUrl: "/resume.pdf",
   socials: [
     { label: "LinkedIn", href: "https://www.linkedin.com/in/chris-moen-453473b6" },
