@@ -2,6 +2,7 @@ import { Fragment, useEffect, type ReactNode } from "react";
 import type { CaseStudy as Study } from "../data/caseStudies";
 import CodeTabs from "./CodeTabs";
 import ScreenGallery from "./ScreenGallery";
+import WifiDiagram from "./WifiDiagram";
 import { BeforeAfter, FlowArrow, LinearFlow, SystemFlow } from "./flows";
 import { Heading } from "./ui";
 
@@ -300,6 +301,49 @@ export default function CaseStudy({ study }: { study: Study }) {
                 </div>
               </div>
             ))}
+          </div>
+        </Section>
+      )}
+
+      {/* Illustrated explainer */}
+      {study.explainer && (
+        <Section title={study.explainer.title} sub={study.explainer.intro}>
+          <div className="grid gap-8 lg:grid-cols-[1.35fr_1fr] lg:items-start">
+            <figure className="reveal glass rounded-2xl p-4 sm:p-6">
+              {study.explainer.diagram === "wifi" && <WifiDiagram />}
+              {study.explainer.caption && <figcaption className="mt-2 text-xs text-slate-500">{study.explainer.caption}</figcaption>}
+            </figure>
+            <div>
+              <ol className="space-y-3">
+                {study.explainer.points.map((pt, i) => {
+                  const tone = { mint: "bg-mint", sun: "bg-sun", coral: "bg-coral", violet: "bg-violet" }[pt.tone];
+                  return (
+                    <li key={pt.title} className="reveal glass flex gap-4 rounded-xl p-4">
+                      <span className={`grid size-8 shrink-0 place-items-center rounded-full text-sm font-extrabold text-night ${tone}`}>{i + 1}</span>
+                      <div>
+                        <p className="font-semibold text-white">{pt.title}</p>
+                        <p className="mt-1 text-sm leading-relaxed text-slate-400">{pt.body}</p>
+                      </div>
+                    </li>
+                  );
+                })}
+              </ol>
+              {study.explainer.alert && (
+                <div className="reveal mt-4 rounded-xl border border-sky/40 bg-sky/10 p-4">
+                  <p className="flex items-center gap-2 text-xs font-bold tracking-wider text-sky uppercase">
+                    <svg className="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
+                      <path d="M6 8a6 6 0 1 1 12 0c0 7 3 8 3 8H3s3-1 3-8M10 21a2 2 0 0 0 4 0" />
+                    </svg>
+                    {study.explainer.alert.label}
+                  </p>
+                  <p className="mt-2 font-semibold text-white">{study.explainer.alert.issue}</p>
+                  <p className="mt-1 text-sm text-slate-300">
+                    <span className="font-semibold text-mint">Next step: </span>
+                    {study.explainer.alert.nextStep}
+                  </p>
+                </div>
+              )}
+            </div>
           </div>
         </Section>
       )}

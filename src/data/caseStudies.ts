@@ -32,6 +32,15 @@ export type CaseStudy = {
     items: { name: string; signal: string; rootCause: string; action: string; featured?: boolean }[];
     audiences: { name: string; gets: string }[];
   };
+  // Illustrated explainer for one detection (diagram chosen by key)
+  explainer?: {
+    title: string;
+    intro: string;
+    diagram: "wifi";
+    points: { title: string; body: string; tone: "mint" | "sun" | "coral" | "violet" }[];
+    alert?: { label: string; issue: string; nextStep: string };
+    caption?: string;
+  };
   // Column diagram: sources → engine → audiences
   systemFlow?: {
     title: string;
@@ -499,6 +508,25 @@ export const caseStudies: CaseStudy[] = [
           ],
         },
       ],
+    },
+    // TODO: illustrative example; adjust the signals/next steps to match the real detection
+    explainer: {
+      title: "Example: a bad Wi-Fi experience",
+      intro:
+        "A customer calls saying \"the internet is slow\", but the service to the home is fine. The problem lives inside the house. This is the kind of situation the bad Wi-Fi detection was built to recognize.",
+      diagram: "wifi",
+      points: [
+        { tone: "mint", title: "The line into the home is healthy", body: "Speeds and stability at the modem look normal, so this isn't an outage or a network fault." },
+        { tone: "sun", title: "Weak signal far from the modem", body: "Walls, floors, and distance drop the signal (low RSSI), so devices in the upstairs bedroom struggle." },
+        { tone: "coral", title: "Congestion from neighbouring networks", body: "Nearby Wi-Fi networks on the same channel compete for the same airwaves and interfere." },
+        { tone: "violet", title: "Too many devices on one band", body: "Phones, tablets, and TVs crowd the same band near the modem and compete for airtime." },
+      ],
+      alert: {
+        label: "What the agent sees",
+        issue: "Likely in-home Wi-Fi issue (congestion and weak coverage), not a service problem.",
+        nextStep: "Suggest moving the modem centrally, switching Wi-Fi channel or band, or adding coverage upstairs.",
+      },
+      caption: "Simplified illustration.",
     },
     // TODO: the "before" lane is an illustrative typical path; adjust to match reality
     spotlight: {
