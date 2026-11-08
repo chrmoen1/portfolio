@@ -79,7 +79,8 @@ export type CaseStudy = {
     code?: { caption: string; files: { name: string; lang: string; code: string }[] };
   };
   challenges: { title: string; problem: string; approach: string }[];
-  results?: { value: string; label: string }[];
+  // `award: true` renders a trophy tile (value = award name, label = who awarded it)
+  results?: { value: string; label: string; award?: boolean }[];
   screenshots?: { src: string; caption: string }[];
   // Dev-only placeholder labels for content not added yet (omit to show nothing)
   placeholders?: { video?: string; results?: string[]; screenshots?: string[]; screenshotsSub?: string };
@@ -692,6 +693,7 @@ deploy-openstack:
     ],
     results: [
       { value: "~$20K", label: "Monthly savings from proactive power supply replacement" },
+      { value: "Excellence & Innovation Award", label: "Recognized by Bell", award: true },
       // TODO: add more if you can share them, e.g. repeat visits avoided, homes covered
     ],
     cta: {

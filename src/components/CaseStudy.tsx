@@ -520,13 +520,25 @@ export default function CaseStudy({ study }: { study: Study }) {
       {(study.results?.length || (DEV && study.placeholders?.results)) && (
         <Section title="Results">
           {study.results?.length ? (
-            <div className={`grid grid-cols-2 gap-5 ${study.results.length < 4 ? "lg:grid-cols-3" : "lg:grid-cols-4"}`}>
-              {study.results.map((r) => (
-                <div key={r.label} className="glass rounded-xl px-4 py-8 text-center">
-                  <p className="text-4xl font-extrabold text-sky">{r.value}</p>
-                  <p className="mt-1 font-semibold text-white">{r.label}</p>
-                </div>
-              ))}
+            <div className={`grid gap-5 sm:grid-cols-2 ${({ 1: "sm:grid-cols-1 max-w-md", 2: "", 3: "lg:grid-cols-3" } as Record<number, string>)[study.results.length] ?? "lg:grid-cols-4"}`}>
+              {study.results.map((r) =>
+                r.award ? (
+                  <div key={r.value} className="flex flex-col items-center justify-center rounded-xl border border-sun/40 bg-sun/10 px-4 py-8 text-center">
+                    <span className="grid size-12 place-items-center rounded-full bg-sun/20 text-sun">
+                      <svg className="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0zM7 6H4a3 3 0 0 0 3 4M17 6h3a3 3 0 0 1-3 4" />
+                      </svg>
+                    </span>
+                    <p className="mt-3 text-xl font-extrabold text-white">{r.value}</p>
+                    <p className="mt-1 text-sm font-semibold text-sun">{r.label}</p>
+                  </div>
+                ) : (
+                  <div key={r.label} className="glass flex flex-col justify-center rounded-xl px-4 py-8 text-center">
+                    <p className="text-4xl font-extrabold text-sky">{r.value}</p>
+                    <p className="mt-1 font-semibold text-white">{r.label}</p>
+                  </div>
+                ),
+              )}
             </div>
           ) : (
             <div className="grid grid-cols-2 gap-5 lg:grid-cols-4">
