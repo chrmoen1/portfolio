@@ -316,7 +316,7 @@ export default function CaseStudy({ study }: { study: Study }) {
             <div>
               <ol className="space-y-3">
                 {study.explainer.points.map((pt, i) => {
-                  const tone = { mint: "bg-mint", sun: "bg-sun", coral: "bg-coral", violet: "bg-violet" }[pt.tone];
+                  const tone = { mint: "bg-mint", sun: "bg-sun", coral: "bg-coral", violet: "bg-violet", sky: "bg-sky", cyan: "bg-cyan" }[pt.tone];
                   return (
                     <li key={pt.title} className="reveal glass flex gap-4 rounded-xl p-4">
                       <span className={`grid size-8 shrink-0 place-items-center rounded-full text-sm font-extrabold text-night ${tone}`}>{i + 1}</span>
@@ -336,7 +336,20 @@ export default function CaseStudy({ study }: { study: Study }) {
                     </svg>
                     {study.explainer.alert.label}
                   </p>
-                  <p className="mt-2 font-semibold text-white">{study.explainer.alert.issue}</p>
+                  {study.explainer.alert.checks && (
+                    <ul className="mt-3 grid grid-cols-2 gap-2">
+                      {study.explainer.alert.checks.map((c) => (
+                        <li
+                          key={c.layer}
+                          className={`flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm ${c.ok ? "bg-mint/10 text-slate-200" : "bg-coral/15 font-semibold text-white"}`}
+                        >
+                          <span className={c.ok ? "text-mint" : "text-coral"}>{c.ok ? "✓" : "!"}</span>
+                          {c.layer}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                  <p className="mt-3 font-semibold text-white">{study.explainer.alert.issue}</p>
                   <p className="mt-1 text-sm text-slate-300">
                     <span className="font-semibold text-mint">Next step: </span>
                     {study.explainer.alert.nextStep}
