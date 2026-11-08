@@ -1,0 +1,7 @@
+# Copy to .dev.vars for local testing with `npm run pages:dev` (never commit .dev.vars)
+RESEND_API_KEY=re_xxxxxxxxxxxxxxxx
+CONTACT_TO=you@example.com
+# Optional: verified sender on your domain (default: Resend's test sender)
+# CONTACT_FROM=Portfolio <hello@yourdomain.com>
+# Optional: Cloudflare Turnstile secret (pair with VITE_TURNSTILE_SITE_KEY)
+# TURNSTILE_SECRET=0x4AAAAAAA...

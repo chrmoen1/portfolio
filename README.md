@@ -31,7 +31,22 @@ skills, skill levels, certifications, socials.
 - **Contact forms** have no backend; they open the visitor's email client pre-filled.
 - Colours and fonts are tokens under `@theme` in `src/index.css`.
 
-## Deploying
+## Contact form
 
-`npm run build` outputs a static site in `dist/`. Deploy to Vercel, Netlify, Cloudflare Pages or
-GitHub Pages (set `base` in `vite.config.ts` if serving from a sub-path).
+The form posts to a Cloudflare Pages Function, [`functions/api/contact.js`](functions/api/contact.js),
+which emails you through [Resend](https://resend.com). Visitors' addresses are set as reply-to.
+Spam protection: a hidden honeypot field, plus optional Cloudflare Turnstile.
+
+- Test locally with the real function: copy `.dev.vars.example` to `.dev.vars`, then `npm run pages:dev`.
+- Plain `npm run dev` has no backend, so the form shows an error with an "email me directly" fallback.
+
+## Deploying (Cloudflare Pages)
+
+1. Push the repo to GitHub, then in Cloudflare: **Workers & Pages → Create → Pages → Connect to Git**.
+2. Build command `npm run build`, output directory `dist`. The `functions/` folder deploys automatically.
+3. **Settings → Environment variables** (Production):
+   - `RESEND_API_KEY`: your Resend API key
+   - `CONTACT_TO`: the inbox that receives messages
+   - `CONTACT_FROM` *(optional)*: e.g. `Portfolio <hello@yourdomain.com>` once your domain is verified in Resend
+   - `TURNSTILE_SECRET` + `VITE_TURNSTILE_SITE_KEY` *(optional)*: from **Cloudflare → Turnstile → Add site**
+4. Add a custom domain under **Custom domains** if you have one.
