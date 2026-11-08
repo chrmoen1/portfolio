@@ -113,6 +113,8 @@ export type Project = {
   href?: string;
   repo?: string;
   caseStudy?: string; // slug in caseStudies.ts → opens #/work/<slug>
+  // Card cover image with an overlay summarizing what the project does
+  cover?: { src: string; alt: string; summary: string; highlights: string[] };
 };
 
 // TODO: replace these placeholders with your real projects.
@@ -125,6 +127,12 @@ export const projects: Project[] = [
     tags: ["React", "GraphQL", "Node.js", "MongoDB", "AI"],
     href: "https://pipemotion.com",
     caseStudy: "pipemotion",
+    cover: {
+      src: "/pipemotion/client-profile-card.webp",
+      alt: "pipeMOTION client profile screen",
+      summary: "An AI assistant that keeps brokers on top of every client",
+      highlights: ["20+ AI agents", "Gmail & Outlook", "Google Cloud"],
+    },
   },
   {
     title: "Home Network Root-Cause Detection",
@@ -133,13 +141,12 @@ export const projects: Project[] = [
       "SQL detection platform at Bell that diagnoses low signal, poor performance, and bad Wi-Fi, and delivers root causes to technicians and front-line agents.",
     tags: ["SQL", "Python", "OpenStack", "Anomaly Detection"],
     caseStudy: "bell-root-cause",
-  },
-  {
-    title: "Project Three",
-    category: "Open Source",
-    description: "Short description of what it does, the problem it solves, and your role.",
-    tags: ["TypeScript", "Tailwind"],
-    repo: "#",
+    cover: {
+      src: "/bell/cover.svg",
+      alt: "Diagram: home-network data flows into SQL detection, which alerts agents, informs technicians, and ships power supplies",
+      summary: "Finds home-network root causes before customers call",
+      highlights: ["Hundreds of SQL tables", "OpenStack", "~$20K/mo saved"],
+    },
   },
 ];
 

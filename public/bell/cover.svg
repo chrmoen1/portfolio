@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" font-family="Barlow, 'Segoe UI', Arial, sans-serif">
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="40%" r="60%">
+      <stop offset="0" stop-color="#1d3a7a"/>
+      <stop offset="1" stop-color="#0b0e27"/>
+    </radialGradient>
+    <linearGradient id="engine" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#22d3ee"/>
+      <stop offset="1" stop-color="#3fa9f5"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#ffffff" stroke-opacity="0.04"/>
+    </pattern>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0L10 5L0 10z" fill="#3fa9f5"/>
+    </marker>
+  </defs>
+
+  <rect width="1200" height="675" fill="url(#glow)"/>
+  <rect width="1200" height="675" fill="url(#grid)"/>
+
+  <!-- Data sources -->
+  <g>
+    <rect x="70" y="150" width="250" height="300" rx="22" fill="#ffffff" fill-opacity="0.05" stroke="#ffffff" stroke-opacity="0.12"/>
+    <text x="195" y="190" text-anchor="middle" font-size="16" font-weight="700" fill="#94a3b8" letter-spacing="3">DATA IN</text>
+    <!-- modem icon -->
+    <rect x="150" y="215" width="90" height="46" rx="10" fill="none" stroke="#22d3ee" stroke-width="3"/>
+    <circle cx="172" cy="238" r="5" fill="#3ee6a8"/>
+    <circle cx="192" cy="238" r="5" fill="#3ee6a8"/>
+    <circle cx="212" cy="238" r="5" fill="#facc15"/>
+    <path d="M170 210c15-16 35-16 50 0M180 202c9-8 21-8 30 0" fill="none" stroke="#22d3ee" stroke-width="3" stroke-linecap="round"/>
+    <g font-size="17" fill="#e2e8f0">
+      <rect x="95" y="290" width="200" height="38" rx="10" fill="#0b0e27" fill-opacity="0.6" stroke="#ffffff" stroke-opacity="0.1"/>
+      <text x="195" y="315" text-anchor="middle">Hundreds of SQL tables</text>
+      <rect x="95" y="338" width="200" height="38" rx="10" fill="#0b0e27" fill-opacity="0.6" stroke="#ffffff" stroke-opacity="0.1"/>
+      <text x="195" y="363" text-anchor="middle">Modem &amp; access metrics</text>
+      <rect x="95" y="386" width="200" height="38" rx="10" fill="#0b0e27" fill-opacity="0.6" stroke="#ffffff" stroke-opacity="0.1"/>
+      <text x="195" y="411" text-anchor="middle">Outage events</text>
+    </g>
+  </g>
+
+  <!-- Arrow to engine -->
+  <path d="M330 300H420" stroke="#3fa9f5" stroke-width="4" stroke-dasharray="10 8" marker-end="url(#arrow)"/>
+
+  <!-- Detection engine -->
+  <g>
+    <rect x="430" y="120" width="340" height="360" rx="26" fill="#c04df9" fill-opacity="0.12" stroke="#c04df9" stroke-opacity="0.55" stroke-width="2"/>
+    <text x="600" y="160" text-anchor="middle" font-size="16" font-weight="700" fill="#d8b4fe" letter-spacing="3">SQL DETECTION · OPENSTACK</text>
+    <g font-size="19" font-weight="600" fill="#ffffff">
+      <rect x="465" y="185" width="270" height="48" rx="12" fill="#0b0e27" fill-opacity="0.7" stroke="#ffffff" stroke-opacity="0.12"/>
+      <text x="490" y="216">Low RSSI</text>
+      <rect x="465" y="243" width="270" height="48" rx="12" fill="#0b0e27" fill-opacity="0.7" stroke="#ffffff" stroke-opacity="0.12"/>
+      <text x="490" y="274">Poor network performance</text>
+      <rect x="465" y="301" width="270" height="48" rx="12" fill="#0b0e27" fill-opacity="0.7" stroke="#ffffff" stroke-opacity="0.12"/>
+      <text x="490" y="332">Bad Wi-Fi experience</text>
+      <rect x="465" y="359" width="270" height="48" rx="12" fill="#facc15" fill-opacity="0.14" stroke="#facc15" stroke-opacity="0.7"/>
+      <text x="490" y="390">Faulty power supply</text>
+    </g>
+    <g transform="translate(600 440)">
+      <rect x="-120" y="-18" width="240" height="36" rx="18" fill="url(#engine)"/>
+      <text y="7" text-anchor="middle" font-size="17" font-weight="700" fill="#0b0e27">Spikes + conditions</text>
+    </g>
+  </g>
+
+  <!-- Arrows to outputs -->
+  <path d="M780 240C830 240 830 190 870 190" fill="none" stroke="#3fa9f5" stroke-width="4" stroke-dasharray="10 8" marker-end="url(#arrow)"/>
+  <path d="M780 300H870" stroke="#3fa9f5" stroke-width="4" stroke-dasharray="10 8" marker-end="url(#arrow)"/>
+  <path d="M780 360C830 360 830 410 870 410" fill="none" stroke="#3fa9f5" stroke-width="4" stroke-dasharray="10 8" marker-end="url(#arrow)"/>
+
+  <!-- Outputs -->
+  <g font-size="19" font-weight="600" fill="#ffffff">
+    <rect x="880" y="160" width="260" height="62" rx="14" fill="#ffffff" fill-opacity="0.06" stroke="#ffffff" stroke-opacity="0.15"/>
+    <circle cx="912" cy="191" r="13" fill="#3fa9f5" fill-opacity="0.25"/>
+    <path d="M906 186h12v8a6 6 0 0 1-12 0zM912 200v4" stroke="#3fa9f5" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <text x="938" y="198">Agent alert</text>
+
+    <rect x="880" y="270" width="260" height="62" rx="14" fill="#ffffff" fill-opacity="0.06" stroke="#ffffff" stroke-opacity="0.15"/>
+    <circle cx="912" cy="301" r="13" fill="#22d3ee" fill-opacity="0.25"/>
+    <path d="M906 307l9-9m-1 0 4-4-3-3-4 4" stroke="#22d3ee" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <text x="938" y="308">Tech diagnosis</text>
+
+    <rect x="880" y="380" width="260" height="62" rx="14" fill="#3ee6a8" fill-opacity="0.12" stroke="#3ee6a8" stroke-opacity="0.6"/>
+    <circle cx="912" cy="411" r="13" fill="#3ee6a8" fill-opacity="0.25"/>
+    <path d="M905 406l7-4 7 4v9l-7 4-7-4zM905 406l7 4 7-4M912 410v9" stroke="#3ee6a8" stroke-width="2.2" fill="none" stroke-linejoin="round"/>
+    <text x="938" y="418">PSU shipped</text>
+  </g>
+</svg>
