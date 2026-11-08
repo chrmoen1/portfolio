@@ -88,7 +88,7 @@ export const caseStudies: CaseStudy[] = [
       { label: "Role", value: "Co-Founder & CTO" },
       { label: "Scope", value: "Architecture, full-stack, AI, infrastructure" },
       { label: "Timeline", value: "2026 — Present" }, // TODO: confirm start date
-      { label: "Status", value: "Live product" },
+      { label: "Status", value: "MVP" },
     ],
     stack: [
       "Next.js 16",
@@ -386,9 +386,6 @@ export const caseStudies: CaseStudy[] = [
     //   { value: "—", label: "Emails handled by AI" },
     //   { value: "—", label: "Hours saved per broker / week" },
     // ],
-    placeholders: {
-      results: ["Brokers onboarded", "Emails handled by AI", "Hours saved / week", "Response time"],
-    },
     cta: {
       title: "Want to see it live?",
       body: "Happy to walk through the product and the architecture behind it.",
