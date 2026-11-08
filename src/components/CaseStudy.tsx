@@ -308,56 +308,58 @@ export default function CaseStudy({ study }: { study: Study }) {
       {/* Illustrated explainer */}
       {study.explainer && (
         <Section title={study.explainer.title} sub={study.explainer.intro}>
-          <div className="grid gap-8 lg:grid-cols-[1.35fr_1fr] lg:items-start">
+          <div className="grid gap-6 lg:grid-cols-[1.7fr_1fr] lg:items-center">
             <figure className="reveal glass rounded-2xl p-4 sm:p-6">
               {study.explainer.diagram === "wifi" && <WifiDiagram />}
               {study.explainer.caption && <figcaption className="mt-2 text-xs text-slate-500">{study.explainer.caption}</figcaption>}
             </figure>
-            <div>
-              <ol className="space-y-3">
-                {study.explainer.points.map((pt, i) => {
-                  const tone = { mint: "bg-mint", sun: "bg-sun", coral: "bg-coral", violet: "bg-violet", sky: "bg-sky", cyan: "bg-cyan" }[pt.tone];
-                  return (
-                    <li key={pt.title} className="reveal glass flex gap-4 rounded-xl p-4">
-                      <span className={`grid size-8 shrink-0 place-items-center rounded-full text-sm font-extrabold text-night ${tone}`}>{i + 1}</span>
-                      <div>
-                        <p className="font-semibold text-white">{pt.title}</p>
-                        <p className="mt-1 text-sm leading-relaxed text-slate-400">{pt.body}</p>
-                      </div>
-                    </li>
-                  );
-                })}
-              </ol>
-              {study.explainer.alert && (
-                <div className="reveal mt-4 rounded-xl border border-sky/40 bg-sky/10 p-4">
-                  <p className="flex items-center gap-2 text-xs font-bold tracking-wider text-sky uppercase">
-                    <svg className="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
-                      <path d="M6 8a6 6 0 1 1 12 0c0 7 3 8 3 8H3s3-1 3-8M10 21a2 2 0 0 0 4 0" />
-                    </svg>
-                    {study.explainer.alert.label}
-                  </p>
-                  {study.explainer.alert.checks && (
-                    <ul className="mt-3 grid grid-cols-2 gap-2">
-                      {study.explainer.alert.checks.map((c) => (
-                        <li
-                          key={c.layer}
-                          className={`flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm ${c.ok ? "bg-mint/10 text-slate-200" : "bg-coral/15 font-semibold text-white"}`}
-                        >
-                          <span className={c.ok ? "text-mint" : "text-coral"}>{c.ok ? "✓" : "!"}</span>
-                          {c.layer}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                  <p className="mt-3 font-semibold text-white">{study.explainer.alert.issue}</p>
-                  <p className="mt-1 text-sm text-slate-300">
-                    <span className="font-semibold text-mint">Next step: </span>
-                    {study.explainer.alert.nextStep}
-                  </p>
-                </div>
-              )}
-            </div>
+            {study.explainer.alert && (
+              <div className="reveal rounded-2xl border border-sky/40 bg-sky/10 p-5">
+                <p className="flex items-center gap-2 text-xs font-bold tracking-wider text-sky uppercase">
+                  <svg className="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
+                    <path d="M6 8a6 6 0 1 1 12 0c0 7 3 8 3 8H3s3-1 3-8M10 21a2 2 0 0 0 4 0" />
+                  </svg>
+                  {study.explainer.alert.label}
+                </p>
+                {study.explainer.alert.checks && (
+                  <ul className="mt-3 grid grid-cols-2 gap-2">
+                    {study.explainer.alert.checks.map((c) => (
+                      <li
+                        key={c.layer}
+                        className={`flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm ${c.ok ? "bg-mint/10 text-slate-200" : "bg-coral/15 font-semibold text-white"}`}
+                      >
+                        <span className={c.ok ? "text-mint" : "text-coral"}>{c.ok ? "✓" : "!"}</span>
+                        {c.layer}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                <p className="mt-4 font-semibold text-white">{study.explainer.alert.issue}</p>
+                <p className="mt-1 text-sm text-slate-300">
+                  <span className="font-semibold text-mint">Next step: </span>
+                  {study.explainer.alert.nextStep}
+                </p>
+              </div>
+            )}
           </div>
+          <h3 className="reveal mt-10 mb-4 text-lg text-slate-300">Possible causes the detection checks for</h3>
+          <ol className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+            {study.explainer.points.map((pt, i) => {
+              const tone = {
+                mint: "bg-mint", sun: "bg-sun", coral: "bg-coral", violet: "bg-violet", sky: "bg-sky",
+                cyan: "bg-cyan", pink: "bg-pink-500", orange: "bg-orange-400", lime: "bg-lime-400",
+              }[pt.tone];
+              return (
+                <li key={pt.title} className="reveal glass flex gap-3 rounded-xl p-4">
+                  <span className={`grid size-7 shrink-0 place-items-center rounded-full text-sm font-extrabold text-night ${tone}`}>{i + 1}</span>
+                  <div>
+                    <p className="font-semibold text-white">{pt.title}</p>
+                    <p className="mt-1 text-sm leading-relaxed text-slate-400">{pt.body}</p>
+                  </div>
+                </li>
+              );
+            })}
+          </ol>
         </Section>
       )}
 

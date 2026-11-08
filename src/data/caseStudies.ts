@@ -37,7 +37,7 @@ export type CaseStudy = {
     title: string;
     intro: string;
     diagram: "wifi";
-    points: { title: string; body: string; tone: "mint" | "sun" | "coral" | "violet" | "sky" | "cyan" }[];
+    points: { title: string; body: string; tone: "mint" | "sun" | "coral" | "violet" | "sky" | "cyan" | "pink" | "orange" | "lime" }[];
     alert?: { label: string; checks?: { layer: string; ok: boolean }[]; issue: string; nextStep: string };
     caption?: string;
   };
@@ -513,14 +513,17 @@ export const caseStudies: CaseStudy[] = [
     explainer: {
       title: "Example: \"my Wi-Fi is bad\"",
       intro:
-        "A customer calls saying their Wi-Fi is bad. That complaint could come from anywhere between the core network and the device in their hand, and the agent can't tell which from the call alone. The detection checks each layer and pinpoints where the problem actually is.",
+        "A customer calls saying their Wi-Fi is bad. That complaint could come from anywhere between the core network and the device in their hand, from a firmware defect, or even from another device on their network, and the agent can't tell which from the call alone. The detection checks each layer and pinpoints where the problem actually is.",
       diagram: "wifi",
       points: [
         { tone: "sky", title: "Core network issue", body: "A problem upstream affects many homes at once, so nothing inside this home will fix it." },
         { tone: "sun", title: "Low optical fibre signal", body: "Weak light levels on the fibre line into the home degrade the connection before it reaches the modem." },
         { tone: "cyan", title: "Low WAN speed", body: "Speeds arriving at the modem are well below what the customer's service should deliver." },
         { tone: "coral", title: "Wi-Fi congestion", body: "Neighbouring networks on the same channel and many devices on one band compete for airtime." },
-        { tone: "violet", title: "High Wi-Fi interference", body: "Interference, walls, and distance leave far-away devices with a weak, noisy signal (low RSSI)." },
+        { tone: "violet", title: "High Wi-Fi interference", body: "Other electronics and nearby signals add noise on the Wi-Fi channel, so devices drop packets and slow down." },
+        { tone: "pink", title: "Known firmware defect", body: "The modem is on a firmware version with a known defect that degrades performance until it's updated." },
+        { tone: "orange", title: "Bad actor on the network", body: "A device on the home network disrupts traffic, for example ARP poisoning from certain Wi-Fi extenders." },
+        { tone: "lime", title: "Low device RSSI from building materials", body: "Concrete, brick, or metal block the signal to parts of the home, so the fix is a range extender, not a network repair." },
       ],
       alert: {
         label: "What the agent sees (example)",
@@ -528,6 +531,8 @@ export const caseStudies: CaseStudy[] = [
           { layer: "Core network", ok: true },
           { layer: "Fibre signal", ok: true },
           { layer: "WAN speed", ok: true },
+          { layer: "Firmware", ok: true },
+          { layer: "Network devices", ok: true },
           { layer: "Wi-Fi congestion", ok: false },
         ],
         issue: "Likely in-home Wi-Fi congestion, not a network or line problem.",
