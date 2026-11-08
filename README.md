@@ -37,8 +37,10 @@ The form posts to a Cloudflare Pages Function, [`functions/api/contact.js`](func
 which emails you through [Resend](https://resend.com). Visitors' addresses are set as reply-to.
 Spam protection: a hidden honeypot field, plus optional Cloudflare Turnstile.
 
-- Test locally with the real function: copy `.dev.vars.example` to `.dev.vars`, then `npm run pages:dev`.
-- Plain `npm run dev` has no backend, so the form shows an error with an "email me directly" fallback.
+- Test locally: copy `.dev.vars.example` to `.dev.vars` and fill in your Resend key. `npm run dev` runs the same
+  function inside the Vite dev server (see `pagesFunctionsDev` in `vite.config.ts`), so the form really sends.
+  `npm run pages:dev` runs it under Cloudflare's own runtime (wrangler) if you want an exact match.
+- Without `.dev.vars`, the form reports "not configured" and offers an "email me directly" fallback.
 
 ## Deploying (Cloudflare Pages)
 
